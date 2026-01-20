@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제노기어스 공략 - WALKTHROUGH</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+/* index.html의 핵심 디자인 가이드라인 유지 */
+:root {
+    --bg-primary: #000000;
+    --bg-secondary: #080808;
+    --bg-tertiary: #0f0f0f;
+    --bg-card: #0a0a0a;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --text-muted: #777777;
+    --accent-red: #ff0000;
+    --accent-red-dark: #cc0000;
+    --accent-glow: rgba(255, 0, 0, 0.5);
+    --border-color: #1a1a1a;
+    --font-display: 'Orbitron', sans-serif;
+    --font-body: 'Noto Sans KR', sans-serif;
+    --container-width: 1200px;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: var(--font-body);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+/* Background Effects */
+.scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px); opacity: 0.3; }
+.bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; background: radial-gradient(circle at 50% 0%, rgba(153, 0, 0, 0.1) 0%, transparent 70%); }
+
+/* Header & Nav */
+.main-header { position: sticky; top: 0; z-index: 100; background: rgba(0, 0, 0, 0.9); border-bottom: 1px solid var(--border-color); backdrop-filter: blur(10px); }
+.header-content { max-width: var(--container-width); margin: 0 auto; padding: 1rem var(--spacing-md); display: flex; justify-content: space-between; align-items: center; }
+.logo-section { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+.gear-icon { font-size: 1.5rem; color: var(--accent-red); animation: spin 10s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.main-title { font-family: var(--font-display); font-size: 1.2rem; color: #fff; letter-spacing: 1px; }
+.main-nav { display: flex; gap: 0.5rem; }
+.nav-link { font-family: var(--font-display); font-size: 0.8rem; text-decoration: none; color: var(--text-secondary); padding: 0.5rem 1rem; border: 1px solid transparent; transition: 0.3s; }
+.nav-link:hover, .nav-link.active { color: var(--accent-red); border-color: var(--accent-red); background: rgba(255, 0, 0, 0.1); }
+
+/* Layout Structure */
+.container { max-width: var(--container-width); margin: 0 auto; padding: var(--spacing-lg) var(--spacing-md); display: grid; grid-template-columns: 280px 1fr; gap: var(--spacing-lg); position: relative; z-index: 1; }
+
+/* Sidebar Navigation */
+.sidebar { position: sticky; top: 100px; height: calc(100vh - 120px); overflow-y: auto; padding-right: 10px; }
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--accent-red); }
+.chapter-list { list-style: none; }
+.chapter-item { margin-bottom: 0.5rem; }
+.chapter-link { display: block; padding: 0.6rem 1rem; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+.chapter-link:hover { border-color: var(--accent-red); color: var(--text-primary); padding-left: 1.5rem; }
+.chapter-link.active { border-left: 4px solid var(--accent-red); background: var(--bg-tertiary); color: var(--accent-red); }
+.disc-label { font-family: var(--font-display); color: var(--accent-red); font-size: 0.75rem; margin: 1.5rem 0 0.5rem; padding-bottom: 5px; border-bottom: 1px solid var(--accent-red-dark); }
+
+/* Walkthrough Content */
+.content-area { background: var(--bg-card); border: 1px solid var(--border-color); padding: var(--spacing-lg); border-radius: 4px; }
+.content-header { margin-bottom: var(--spacing-lg); border-bottom: 1px solid var(--border-color); padding-bottom: var(--spacing-md); }
+.content-header h1 { font-family: var(--font-display); color: var(--accent-red); font-size: 2rem; margin-bottom: 0.5rem; }
+.content-header .meta { color: var(--text-muted); font-size: 0.9rem; }
+
+.section { margin-bottom: var(--spacing-lg); }
+.section h2 { font-family: var(--font-display); font-size: 1.4rem; color: #fff; margin-bottom: 1rem; border-left: 4px solid var(--accent-red); padding-left: 1rem; }
+.section p { margin-bottom: 1rem; color: var(--text-secondary); }
+
+/* Boss Box (GIA Style) */
+.boss-box { background: rgba(255, 0, 0, 0.05); border: 1px solid var(--accent-red-dark); padding: var(--spacing-md); margin: 1.5rem 0; border-radius: 4px; }
+.boss-header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--accent-red-dark); margin-bottom: 1rem; padding-bottom: 0.5rem; }
+.boss-name { font-family: var(--font-display); font-weight: 700; color: var(--accent-red); }
+.boss-stats { font-size: 0.85rem; color: var(--text-muted); }
+.boss-strategy { font-size: 0.95rem; }
+.boss-strategy strong { color: #fff; }
+
+/* Item List */
+.item-box { background: var(--bg-tertiary); border: 1px solid var(--border-color); padding: 1rem; margin-bottom: 1.5rem; }
+.item-box h4 { font-size: 0.9rem; color: var(--accent-red); text-transform: uppercase; margin-bottom: 0.5rem; }
+.item-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.85rem; color: var(--text-secondary); }
+
+/* Footer */
+.main-footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 2rem; text-align: center; }
+
+@media (max-width: 900px) {
+    .container { grid-template-columns: 1fr; }
+    .sidebar { position: relative; height: auto; top: 0; margin-bottom: 2rem; }
+    .chapter-list { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; }
+    .chapter-link { white-space: nowrap; }
+}
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+    <div class="scanlines"></div>
+    
+    <header class="main-header">
+        <div class="header-content">
+            <a href="index.html" class="logo-section">
+                <div class="gear-icon">⚙</div>
+                <div class="title-block">
+                    <h1 class="main-title">XENOGEARS</h1>
+                </div>
+            </a>
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link">가이드</a>
+                <a href="walkthrough.html" class="nav-link active">공략</a>
+                <a href="characters.html" class="nav-link">캐릭터</a>
+                <a href="info.html" class="nav-link">정보</a>
+                <a href="story.html" class="nav-link">스토리</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <aside class="sidebar">
+            <div class="disc-label">DISC 1</div>
+            <ul class="chapter-list">
+                <li class="chapter-item"><a href="#ch1" class="chapter-link active">01. Lahan Village</a></li>
+                <li class="chapter-item"><a href="#ch2" class="chapter-link">02. Mountain Path</a></li>
+                <li class="chapter-item"><a href="#ch3" class="chapter-link">03. Blackmoon Forest</a></li>
+                <li class="chapter-item"><a href="#ch4" class="chapter-link">04. Dazil / Desert</a></li>
+                <li class="chapter-item"><a href="#ch5" class="chapter-link">05. Stalactite Cave</a></li>
+                <li class="chapter-item"><a href="#" class="chapter-link">... (More Chapters)</a></li>
+            </ul>
+            <div class="disc-label">DISC 2</div>
+            <ul class="chapter-list">
+                <li class="chapter-item"><a href="#" class="chapter-link">53. First Stage</a></li>
+                <li class="chapter-item"><a href="#" class="chapter-link">64. Final Battle</a></li>
+            </ul>
+        </aside>
+
+        <article class="content-area">
+            <header class="content-header">
+                <div class="meta">Chapter 01</div>
+                <h1>Lahan Village (라한 마을)</h1>
+            </header>
+
+            <section class="section">
+                <h2>Overview</h2>
+                <p>게임의 시작점입니다. 이곳에서는 기본적인 조작법을 익히고 아이템을 수집하며 스토리를 진행하게 됩니다. 웡 페이 퐁(Fei)의 평화로운 일상이 깨지기 전, 마을의 모든 구석을 탐색하세요.</p>
+                
+                <div class="item-box">
+                    <h4>획득 가능 아이템</h4>
+                    <div class="item-list">
+                        <span>• 200 G (티모시의 집)</span>
+                        <span>• Spider Web (민가)</span>
+                        <span>• Aquasol (촌장의 집)</span>
+                        <span>• Eyeball (촌장의 집)</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Walkthrough</h2>
+                <p>1. 웡 페이 퐁의 방에서 시작합니다. 책상 근처를 조사해 소량의 골드를 얻을 수 있습니다.</p>
+                <p>2. 촌장의 집으로 가서 전투 시스템(AP 및 콤보)에 대한 설명을 들으세요. 이 정보는 나중에 매우 중요합니다.</p>
+                <p>3. 마을 북동쪽에 있는 앨리스의 집으로 향하세요. 댄과의 대화 이벤트가 발생합니다.</p>
+            </section>
+
+            <section class="section">
+                <h2>Boss: Rankar Dragon</h2>
+                <div class="boss-box">
+                    <div class="boss-header">
+                        <span class="boss-name">RANKAR DRAGON</span>
+                        <span class="boss-stats">HP: 480 | EXP: 348 | G: 0</span>
+                    </div>
+                    <div class="boss-strategy">
+                        <p><strong>Strategy:</strong> 이 전투는 웰트올(Weltall)에 탑승한 상태로 진행됩니다. 초기 단계에서는 일반 공격으로 AP를 모으세요.</p>
+                        <p>보스의 공격력은 강하지만 웰트올의 방어력으로 충분히 버틸 수 있습니다. <strong>X버튼 공격</strong>을 위주로 사용하여 데미지를 누적시키고, 필요시 Aquasol S를 사용하여 회복하세요.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div style="display: flex; justify-content: space-between; margin-top: 3rem;">
+                    <span style="color: var(--text-muted);">이전: -</span>
+                    <a href="#ch2" style="color: var(--accent-red); text-decoration: none; font-weight: bold;">다음: Mountain Path ▹</a>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p style="font-family: var(--font-display); font-size: 0.9rem; color: var(--text-secondary);">XENOGEARS WALKTHROUGH GUIDE</p>
+        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">Based on Gaming Intelligence Agency Guide Data.</p>
+    </footer>
+
+    <script>
+        // 간단한 탭 활성화 예시 스크립트
+        document.querySelectorAll('.chapter-link').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelector('.chapter-link.active').classList.remove('active');
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -216,26 +216,28 @@ body {
 }
 
 .hero-content {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: var(--spacing-xl);
+    display: flex;
+    justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 .hero-text {
-    max-width: 700px;
+    max-width: 800px;
+    width: 100%;
 }
 
 /* Hero Logo */
 .hero-logo {
     max-width: 500px;
-    margin-bottom: var(--spacing-md);
+    margin: 0 auto var(--spacing-lg);
     filter: drop-shadow(0 0 30px var(--accent-glow));
 }
 
 .hero-logo img {
     width: 100%;
     height: auto;
+    display: block;
 }
 
 .section-title {
@@ -253,8 +255,8 @@ body {
     display: block;
     width: 60px;
     height: 3px;
-    background: linear-gradient(90deg, var(--accent-red), transparent);
-    margin-top: var(--spacing-xs);
+    background: linear-gradient(90deg, transparent, var(--accent-red), transparent);
+    margin: var(--spacing-xs) auto 0;
 }
 
 /* Glitch Effect */
@@ -353,6 +355,7 @@ body {
     display: flex;
     gap: var(--spacing-sm);
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .btn {
@@ -392,76 +395,6 @@ body {
     border-color: var(--accent-red);
     color: var(--accent-red);
     background: rgba(255, 0, 0, 0.1);
-}
-
-/* Gear Animation */
-.hero-visual {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.gear-animation {
-    position: relative;
-    width: 200px;
-    height: 200px;
-}
-
-.gear {
-    position: absolute;
-    border-radius: 50%;
-    border: 3px solid var(--accent-red);
-    opacity: 0.6;
-}
-
-.gear::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 30%;
-    height: 30%;
-    border-radius: 50%;
-    background: var(--accent-red);
-    opacity: 0.3;
-}
-
-.gear.large {
-    width: 180px;
-    height: 180px;
-    top: 10px;
-    left: 10px;
-    animation: spin 15s linear infinite;
-    box-shadow: 0 0 30px var(--accent-glow), inset 0 0 30px rgba(255, 0, 0, 0.1);
-}
-
-.gear.medium {
-    width: 100px;
-    height: 100px;
-    top: 50px;
-    left: 50px;
-    animation: spin 10s linear infinite reverse;
-    border-color: var(--text-primary);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-}
-
-.gear.medium::before {
-    background: var(--text-primary);
-}
-
-.gear.small {
-    width: 50px;
-    height: 50px;
-    top: 75px;
-    left: 75px;
-    animation: spin 5s linear infinite;
-    border-color: var(--accent-red-dark);
-    box-shadow: 0 0 15px rgba(204, 0, 0, 0.3);
-}
-
-.gear.small::before {
-    background: var(--accent-red-dark);
 }
 
 /* Quick Links Grid */
@@ -566,6 +499,7 @@ body {
     color: var(--text-secondary);
     margin-bottom: var(--spacing-xs);
     position: relative;
+    text-align: left;
 }
 
 .info-content li::before {
@@ -614,6 +548,7 @@ body {
     border-left: 3px solid var(--accent-red);
     padding: var(--spacing-md);
     border-radius: 0 4px 4px 0;
+    text-align: left;
 }
 
 .credits-content p {
@@ -658,14 +593,6 @@ body {
 
 /* Responsive */
 @media (max-width: 900px) {
-    .hero-content {
-        grid-template-columns: 1fr;
-    }
-    
-    .hero-visual {
-        display: none;
-    }
-    
     .info-box {
         grid-template-columns: 1fr;
     }
@@ -755,13 +682,6 @@ body {
                         <a href="info.html" class="btn btn-secondary">게임 시스템</a>
                     </div>
                 </div>
-                <div class="hero-visual">
-                    <div class="gear-animation">
-                        <div class="gear large"></div>
-                        <div class="gear medium"></div>
-                        <div class="gear small"></div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -816,7 +736,7 @@ body {
                     <ul>
                         <li>자주 저장하세요. 이 게임은 길고 복잡합니다.</li>
                         <li>대화와 텍스트를 꼼꼼히 읽으세요. 스토리가 매우 중요합니다.</li>
-                        <li>막히면 이 가이드를 참고하세요!</li>
+                        <li>막히면 주저 말고 이 가이드를 참고하세요!</li>
                     </ul>
                 </div>
                 <div class="info-sidebar">
@@ -829,7 +749,7 @@ body {
                         <span class="stat-label">플레이 시간</span>
                     </div>
                     <div class="stat-box">
-                        <span class="stat-number">8</span>
+                        <span class="stat-number">9</span>
                         <span class="stat-label">플레이어블 캐릭터</span>
                     </div>
                 </div>
