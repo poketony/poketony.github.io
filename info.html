@@ -3,97 +3,439 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>제노기어스 정보 - SYSTEM INFO</title>
+    <title>정보 - 제노기어스 한국어 공략</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-/* 공통 디자인 가이드라인 유지 */
 :root {
     --bg-primary: #000000;
     --bg-secondary: #080808;
     --bg-tertiary: #0f0f0f;
     --bg-card: #0a0a0a;
+    
     --text-primary: #ffffff;
     --text-secondary: #cccccc;
     --text-muted: #777777;
+    
     --accent-red: #ff0000;
     --accent-red-dark: #cc0000;
+    --accent-red-darker: #990000;
     --accent-glow: rgba(255, 0, 0, 0.5);
+    
     --border-color: #1a1a1a;
+    --border-glow: rgba(255, 0, 0, 0.3);
+    
     --font-display: 'Orbitron', sans-serif;
     --font-body: 'Noto Sans KR', sans-serif;
-    --container-width: 1200px;
+    
+    --container-width: 900px;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: var(--font-body);
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    font-size: 16px;
     line-height: 1.7;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    min-height: 100vh;
     overflow-x: hidden;
 }
 
-/* Effects */
-.scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px); opacity: 0.3; }
-.bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; background: radial-gradient(circle at 50% 0%, rgba(153, 0, 0, 0.1) 0%, transparent 70%); }
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+    );
+    opacity: 0.3;
+}
 
-/* Header & Nav */
-.main-header { position: sticky; top: 0; z-index: 100; background: rgba(0, 0, 0, 0.9); border-bottom: 1px solid var(--border-color); backdrop-filter: blur(10px); }
-.header-content { max-width: var(--container-width); margin: 0 auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-.logo-section { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
-.gear-icon { font-size: 1.5rem; color: var(--accent-red); animation: spin 10s linear infinite; }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.main-title { font-family: var(--font-display); font-size: 1.2rem; color: #fff; letter-spacing: 1px; }
-.main-nav { display: flex; gap: 0.5rem; }
-.nav-link { font-family: var(--font-display); font-size: 0.8rem; text-decoration: none; color: var(--text-secondary); padding: 0.5rem 1rem; border: 1px solid transparent; transition: 0.3s; }
-.nav-link:hover, .nav-link.active { color: var(--accent-red); border-color: var(--accent-red); background: rgba(255, 0, 0, 0.1); }
+.bg-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    background: 
+        radial-gradient(ellipse at 50% 0%, rgba(153, 0, 0, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 60%, rgba(153, 0, 0, 0.1) 0%, transparent 40%);
+}
 
-/* Layout Structure */
-.container { max-width: var(--container-width); margin: 0 auto; padding: 2rem 1.5rem; display: grid; grid-template-columns: 280px 1fr; gap: 2rem; position: relative; z-index: 1; }
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    position: relative;
+    z-index: 1;
+}
 
-/* Sidebar Navigation */
-.sidebar { position: sticky; top: 100px; height: calc(100vh - 120px); }
-.info-menu { list-style: none; }
-.menu-label { font-family: var(--font-display); color: var(--accent-red); font-size: 0.75rem; margin-bottom: 0.5rem; display: block; border-bottom: 1px solid var(--accent-red-dark); padding-bottom: 5px; }
-.menu-item { margin-bottom: 0.5rem; }
-.menu-link { display: block; padding: 0.6rem 1rem; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
-.menu-link:hover { border-color: var(--accent-red); color: var(--text-primary); }
-.menu-link.active { border-left: 4px solid var(--accent-red); background: var(--bg-tertiary); color: var(--accent-red); }
+/* Header */
+.main-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(180deg, var(--bg-primary) 0%, rgba(0, 0, 0, 0.95) 100%);
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+}
 
-/* Content Area */
-.content-area { background: var(--bg-card); border: 1px solid var(--border-color); padding: 2rem; border-radius: 4px; }
-.section-header { margin-bottom: 2rem; }
-.section-header h1 { font-family: var(--font-display); color: var(--accent-red); font-size: 2.2rem; letter-spacing: 2px; }
+.header-content {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--spacing-sm) var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
 
-.info-section { margin-bottom: 3rem; }
-.info-section h2 { font-family: var(--font-display); font-size: 1.5rem; color: #fff; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
-.info-section h2::before { content: ''; width: 4px; height: 20px; background: var(--accent-red); display: inline-block; }
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
 
-/* Grid Cards for Info */
-.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-.info-card { background: var(--bg-tertiary); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 4px; }
-.info-card h3 { color: var(--accent-red); font-size: 1.1rem; margin-bottom: 1rem; font-family: var(--font-display); }
-.info-card p { font-size: 0.9rem; color: var(--text-secondary); }
+.gear-icon {
+    font-size: 2rem;
+    color: var(--accent-red);
+    animation: spin 10s linear infinite;
+    text-shadow: 0 0 20px var(--accent-glow);
+}
 
-/* Table Style */
-.system-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
-.system-table th { background: rgba(255, 0, 0, 0.1); color: var(--accent-red); text-align: left; padding: 12px; border-bottom: 2px solid var(--accent-red-dark); font-family: var(--font-display); }
-.system-table td { padding: 12px; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); }
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
 
-/* FAQ Box */
-.faq-box { margin-bottom: 1rem; border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; }
-.faq-q { background: var(--bg-tertiary); padding: 1rem; cursor: pointer; font-weight: 500; display: flex; justify-content: space-between; }
-.faq-q::after { content: '▼'; font-size: 0.7rem; color: var(--accent-red); }
-.faq-a { padding: 1rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); font-size: 0.95rem; }
+.title-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    background: linear-gradient(135deg, var(--text-primary), var(--accent-red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-decoration: none;
+}
+
+.subtitle {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+/* Navigation */
+.main-nav {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--text-secondary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent-red);
+    border-color: var(--border-glow);
+    background: rgba(255, 0, 0, 0.1);
+}
+
+.nav-link.active {
+    color: var(--accent-red);
+    border-color: var(--accent-red);
+    background: rgba(255, 0, 0, 0.15);
+}
+
+/* Page Title */
+.page-header {
+    text-align: center;
+    padding: var(--spacing-xl) 0 var(--spacing-lg);
+}
+
+.page-title {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-red);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 20px var(--accent-glow);
+}
+
+.page-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+/* Quick Nav */
+.quick-nav {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.quick-link {
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: var(--text-secondary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.quick-link:hover {
+    color: var(--accent-red);
+    background: rgba(255, 0, 0, 0.1);
+}
+
+/* Section */
+.info-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-red);
+    letter-spacing: 0.05em;
+}
+
+.section-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 24px;
+    background: var(--accent-red);
+    margin-right: var(--spacing-sm);
+    vertical-align: middle;
+}
+
+.section-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: var(--spacing-lg);
+}
+
+.section-content p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.8;
+}
+
+.section-content p:last-child {
+    margin-bottom: 0;
+}
+
+.highlight {
+    color: var(--accent-red);
+    font-weight: 500;
+}
+
+/* FAQ */
+.faq-item {
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.faq-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.faq-question {
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+}
+
+.faq-question::before {
+    content: 'Q.';
+    color: var(--accent-red);
+    font-family: var(--font-display);
+    font-weight: 700;
+}
+
+.faq-answer {
+    color: var(--text-secondary);
+    padding-left: var(--spacing-lg);
+    line-height: 1.8;
+}
+
+.faq-answer::before {
+    content: 'A. ';
+    color: var(--text-muted);
+    font-family: var(--font-display);
+}
+
+/* Info Box */
+.info-box {
+    background: var(--bg-tertiary);
+    border-left: 3px solid var(--accent-red);
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.info-box-title {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--accent-red);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Button Grid */
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-sm);
+    margin: var(--spacing-md) 0;
+}
+
+.button-item {
+    text-align: center;
+    padding: var(--spacing-sm);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.button-symbol {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--accent-red);
+    margin-bottom: var(--spacing-xs);
+}
+
+.button-name {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.button-info {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* List */
+.info-list {
+    list-style: none;
+    padding: 0;
+}
+
+.info-list li {
+    color: var(--text-secondary);
+    padding: var(--spacing-xs) 0;
+    padding-left: var(--spacing-md);
+    position: relative;
+}
+
+.info-list li::before {
+    content: '▹';
+    color: var(--accent-red);
+    position: absolute;
+    left: 0;
+}
 
 /* Footer */
-.main-footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 2rem; text-align: center; }
+.main-footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    padding: var(--spacing-lg) var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
 
-@media (max-width: 900px) {
-    .container { grid-template-columns: 1fr; }
-    .sidebar { position: relative; height: auto; top: 0; }
+.footer-content {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-content p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .main-nav {
+        justify-content: center;
+    }
+    
+    .page-title {
+        font-size: 1.8rem;
+    }
+    
+    .button-grid {
+        grid-template-columns: 1fr;
+    }
 }
     </style>
 </head>
@@ -103,10 +445,13 @@ body {
     
     <header class="main-header">
         <div class="header-content">
-            <a href="index.html" class="logo-section">
+            <div class="logo-section">
                 <div class="gear-icon">⚙</div>
-                <h1 class="main-title">XENOGEARS</h1>
-            </a>
+                <div class="title-block">
+                    <a href="index.html" class="main-title">XENOGEARS</a>
+                    <p class="subtitle">한국어 공략 가이드</p>
+                </div>
+            </div>
             <nav class="main-nav">
                 <a href="index.html" class="nav-link">가이드</a>
                 <a href="walkthrough.html" class="nav-link">공략</a>
@@ -118,125 +463,239 @@ body {
     </header>
 
     <main class="container">
-        <aside class="sidebar">
-            <span class="menu-label">CATEGORIES</span>
-            <ul class="info-menu">
-                <li class="menu-item"><a href="#battle" class="menu-link active">Battle System</a></li>
-                <li class="menu-item"><a href="#gear" class="menu-link">Gear Mechanics</a></li>
-                <li class="menu-item"><a href="#elements" class="menu-link">Elements & Status</a></li>
-                <li class="menu-item"><a href="#faq" class="menu-link">FAQ</a></li>
-            </ul>
-        </aside>
+        <section class="page-header">
+            <h1 class="page-title">INFORMATION</h1>
+            <p class="page-subtitle">제노기어스의 게임 시스템과 자주 묻는 질문</p>
+        </section>
 
-        <article class="content-area">
+        <nav class="quick-nav">
+            <a href="#faq" class="quick-link">자주 묻는 질문</a>
+            <a href="#system" class="quick-link">AP & 필살기</a>
+            <a href="#gears" class="quick-link">기어 전투</a>
+            <a href="#infinity" class="quick-link">인피니티 레벨</a>
+        </nav>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="info-section">
             <div class="section-header">
-                <h1>SYSTEM INFO</h1>
-                <p style="color: var(--text-muted);">제노기어스의 핵심 시스템 가이드</p>
+                <h2 class="section-title">자주 묻는 질문</h2>
             </div>
+            <div class="section-content">
+                <div class="faq-item">
+                    <p class="faq-question">미도리가 반지를 왜 안 가져가나요?</p>
+                    <p class="faq-answer">DISC 2에서 돌려줄 수 있습니다.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-question">캘러미티를 도저히 이길 수 없어요!</p>
+                    <p class="faq-answer">발 영감에게서 업그레이드된 기어 장비를 받아야 합니다. 그 장비 없이는 이길 수 없어요.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-question">기어 필살기는 어떻게 배우나요?</p>
+                    <p class="faq-answer">캐릭터 필살기를 배우면 자동으로 얻어집니다. 따로 배울 필요가 없어요.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-question">엔딩에서 "Episode V"라고 나오는데 무슨 뜻인가요?</p>
+                    <p class="faq-answer">페이와 엘리의 다섯 번째 환생을 의미합니다. 스타워즈나 스타트렉 오마주도 아니고, 4개의 게임을 놓친 것도 아닙니다.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-question">블레이다블리크에서 람서스와 미야를 어떻게 이기나요?</p>
+                    <p class="faq-answer">챕터 12 공략을 참고하세요.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-question">레드럼(Redrum) 공략법이 뭔가요?</p>
+                    <p class="faq-answer">시탄에게 "연기"를 시전하고, 그 다음 "성수의 옷"으로 파티의 화속성 방어력을 올리세요. 그 후 공격하면 됩니다.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-question">빌리의 총은 어떻게 사용하나요?</p>
+                    <p class="faq-answer">총은 탄약이 필요합니다. 상점에서 탄약을 구매하고 장착하세요. 빌리는 에테르 공격도 강력하니 함께 활용하세요.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-question">셰바트의 돌들은 어디 있나요?</p>
+                    <p class="faq-answer"><span class="highlight">새벽의 돌</span>은 궁전 건너편 성벽에 있습니다. <span class="highlight">황혼의 돌</span>은 전쟁 기념관의 인형이 가지고 있습니다. <span class="highlight">어둠의 돌</span>은 광장 분수대 위에서 거미줄을 사용해 낚으세요.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-question">두 번째 아니마의 던전 보스를 어떻게 이기나요?</p>
+                    <p class="faq-answer">빨갛게 변하면 도망쳐서 폭발을 피할 수 있지만, 트레이더 카드를 못 얻습니다. 카드를 원하면 대응력을 올리는 아이템을 장착하고 인피니티 어택 레벨까지 차지한 뒤, 빨갛게 변하자마자 공격하세요.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-question">스토리를 전혀 이해할 수가 없어요. 무슨 일이 벌어지는 건가요?</p>
+                    <p class="faq-answer">게임을 아직 클리어하지 않았다면, 많은 것들이 일부러 이해되지 않게 되어 있습니다 - 나중에 밝혀지거든요. 클리어 후에도 혼란스럽다면 스토리 섹션을 확인하세요.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-question">람서스가 히든 캐릭터라는 게 사실인가요?</p>
+                    <p class="faq-answer">아니요. 그랬다면 멋졌겠지만요.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-question">왜 다들 시탄을 "휴가"라고 부르나요?</p>
+                    <p class="faq-answer">휴가는 솔라리스에서의 그의 본명입니다.</p>
+                </div>
+            </div>
+        </section>
 
-            <section id="battle" class="info-section">
-                <h2>Battle System (인간 형태 전투)</h2>
-                <div class="info-grid">
-                    <div class="info-card">
-                        <h3>AP (Action Points)</h3>
-                        <p>각 턴마다 캐릭터는 일정량의 AP를 가집니다. △(1), □(2), ✕(3) 버튼을 조합하여 공격을 수행하며, 남은 AP는 다음 턴을 위해 저축하거나 콤보에 사용됩니다.</p>
+        <!-- AP & Deathblows Section -->
+        <section id="system" class="info-section">
+            <div class="section-header">
+                <h2 class="section-title">AP & 필살기 시스템</h2>
+            </div>
+            <div class="section-content">
+                <p>
+                    제노기어스에서는 대부분의 게임과 달리 한 턴에 한 번만 공격하지 않습니다. 
+                    <span class="highlight">AP(Attack Points)</span>에 따라 여러 번 공격할 수 있습니다.
+                </p>
+                
+                <p>공격은 세 종류가 있으며, 각각 다른 AP를 소모합니다:</p>
+                
+                <div class="button-grid">
+                    <div class="button-item">
+                        <div class="button-symbol">□</div>
+                        <div class="button-name">약공격</div>
+                        <div class="button-info">AP 1 소모</div>
                     </div>
-                    <div class="info-card">
-                        <h3>Deathblows (필살기)</h3>
-                        <p>특정 버튼 조합을 반복 사용하면 해당 필살기를 습득합니다. 습득 후에는 충분한 AP가 있다면 한 번의 공격으로 강력한 데미지를 줄 수 있습니다.</p>
+                    <div class="button-item">
+                        <div class="button-symbol">△</div>
+                        <div class="button-name">중공격</div>
+                        <div class="button-info">AP 2 소모</div>
+                    </div>
+                    <div class="button-item">
+                        <div class="button-symbol">○</div>
+                        <div class="button-name">강공격</div>
+                        <div class="button-info">AP 3 소모</div>
                     </div>
                 </div>
-                <table class="system-table">
-                    <thead>
-                        <tr>
-                            <th>Attack Type</th>
-                            <th>Button</th>
-                            <th>AP Cost</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Weak</td>
-                            <td>△ (Triangle)</td>
-                            <td>1</td>
-                            <td>낮은 데미지, 높은 명중률</td>
-                        </tr>
-                        <tr>
-                            <td>Moderate</td>
-                            <td>□ (Square)</td>
-                            <td>2</td>
-                            <td>평균적인 데미지와 명중률</td>
-                        </tr>
-                        <tr>
-                            <td>Strong</td>
-                            <td>✕ (Cross)</td>
-                            <td>3</td>
-                            <td>높은 데미지, 낮은 명중률</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
 
-            <section id="gear" class="info-section">
-                <h2>Gear Mechanics (기어 전투)</h2>
-                <p style="margin-bottom: 1rem; color: var(--text-secondary);">기어 전투는 인간 전투와는 완전히 다른 **Fuel(연료)** 시스템을 사용합니다.</p>
-                <div class="info-grid">
-                    <div class="info-card">
-                        <h3>Fuel Management</h3>
-                        <p>모든 행동(공격, 필살기, 부스터)은 연료를 소모합니다. 연료가 0이 되면 공격할 수 없으므로 'Charge' 커맨드로 보충해야 합니다.</p>
-                    </div>
-                    <div class="info-card">
-                        <h3>Attack Levels</h3>
-                        <p>일반 공격 성공 시 어택 레벨이 상승합니다. 레벨이 높을수록 더 강력한 기어 필살기를 사용할 수 있게 됩니다.</p>
-                    </div>
-                    <div class="info-card">
-                        <h3>Booster</h3>
-                        <p>부스터를 켜면 매 턴 연료를 추가 소모하는 대신 캐릭터의 속도(ATB 게이지 상승 속도)가 2배로 빨라집니다.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="elements" class="info-section">
-                <h2>Attributes (속성 관계)</h2>
-                <p style="color: var(--text-secondary);">제노기어스에는 4가지 기본 상성 속성이 존재합니다.</p>
-                <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 4px; text-align: center; border: 1px solid var(--border-color);">
-                    <p style="font-family: var(--font-display); letter-spacing: 2px;">
-                        <span style="color: #ff4d4d;">FIRE</span> ↔ <span style="color: #4da6ff;">WATER</span><br>
-                        <span style="color: #ffcc00;">EARTH</span> ↔ <span style="color: #66ff66;">WIND</span>
+                <div class="info-box">
+                    <div class="info-box-title">💡 필살기 습득 팁</div>
+                    <p style="margin: 0; color: var(--text-secondary);">
+                        필살기는 특정 버튼 조합을 반복해서 사용하면 습득됩니다. 
+                        예를 들어 □□○ 조합을 여러 번 사용하면 해당 필살기를 배울 수 있습니다. 
+                        <span class="highlight">위저드 링</span>을 장착하면 필살기 습득 속도가 빨라집니다!
                     </p>
-                    <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted);">반대되는 속성으로 공격할 경우 추가 데미지를 입힙니다.</p>
                 </div>
-            </section>
 
-            <section id="faq" class="info-section">
-                <h2>자주 묻는 질문 (FAQ)</h2>
-                <div class="faq-box">
-                    <div class="faq-q">필살기(Deathblow) 습득이 너무 느려요.</div>
-                    <div class="faq-a">필살기는 단순히 많이 사용하는 것보다, 해당 필살기에 필요한 버튼 조합의 '애니메이션'을 얼마나 많이 봤느냐가 중요합니다. 예를 들어 T,T,X 필살기를 배우고 싶다면 전투 중에 T,X 조합을 자주 사용하세요.</div>
+                <p>
+                    필살기를 사용하려면 해당 조합에 필요한 AP가 있어야 합니다. 
+                    예를 들어 □△○ 필살기를 사용하려면 최소 6 AP가 필요합니다 (1+2+3).
+                </p>
+            </div>
+        </section>
+
+        <!-- Gears Section -->
+        <section id="gears" class="info-section">
+            <div class="section-header">
+                <h2 class="section-title">기어 전투</h2>
+            </div>
+            <div class="section-content">
+                <p>
+                    제노기어스의 전투 대부분은 <span class="highlight">기어(Gear)</span>를 타고 진행됩니다. 
+                    기어 전투 시스템은 도보 전투와 완전히 다릅니다 - <span class="highlight">AP가 없고 연료(Fuel)가 있습니다.</span>
+                </p>
+                
+                <p>
+                    AP와 달리 연료는 지속적인 수치입니다 - 공격할 때마다 연료가 줄어들고, 
+                    연료가 바닥나면 공격할 수 없습니다. 연료는 기어 상점에서 보충하거나, 
+                    전투 중 <span class="highlight">차지(Charge)</span> 명령으로 소량 회복할 수 있습니다.
+                </p>
+
+                <div class="button-grid">
+                    <div class="button-item">
+                        <div class="button-symbol">□</div>
+                        <div class="button-name">약공격</div>
+                        <div class="button-info">연료 10 소모</div>
+                    </div>
+                    <div class="button-item">
+                        <div class="button-symbol">△</div>
+                        <div class="button-name">중공격</div>
+                        <div class="button-info">연료 20 소모</div>
+                    </div>
+                    <div class="button-item">
+                        <div class="button-symbol">○</div>
+                        <div class="button-name">강공격</div>
+                        <div class="button-info">연료 30 소모</div>
+                    </div>
                 </div>
-                <div class="faq-box">
-                    <div class="faq-q">기어 수리는 어떻게 하나요?</div>
-                    <div class="faq-a">전투 중에는 'Frame HP' 아이템이나 특정 캐릭터의 수리 스킬을 사용해야 합니다. 마을이나 맵에 있는 기어 정비사에게 말을 걸면 골드를 지불하고 HP와 연료를 모두 회복할 수 있습니다.</div>
+
+                <p>
+                    기어에서 공격할 때마다 <span class="highlight">어택 레벨</span>이 0에서 1, 2, 3으로 올라가며, 
+                    이를 통해 기어 필살기를 사용할 수 있습니다:
+                </p>
+                
+                <ul class="info-list">
+                    <li><strong>어택 레벨 1:</strong> □로 시작하는 필살기 사용 가능</li>
+                    <li><strong>어택 레벨 2:</strong> □ 또는 △로 시작하는 필살기 사용 가능</li>
+                    <li><strong>어택 레벨 3:</strong> 모든 필살기 사용 가능</li>
+                </ul>
+
+                <div class="info-box">
+                    <div class="info-box-title">⚡ 부스터 (Booster)</div>
+                    <p style="margin: 0; color: var(--text-secondary);">
+                        모든 기어는 부스터 기능이 있습니다. 활성화하면 AT 게이지가 2배 빠르게 차지만, 
+                        매 턴 추가 연료를 소모합니다. 보통은 연료 낭비지만, 일부 전투에서는 필요합니다.
+                    </p>
                 </div>
-            </section>
-        </article>
+
+                <p>
+                    기어는 경험치로 강해지지 않습니다 (츄츄 제외). 대신 <span class="highlight">프레임</span>(HP), 
+                    <span class="highlight">아머</span>(방어력), <span class="highlight">엔진</span>(공격력과 연료 용량)을 
+                    구매해서 업그레이드합니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- Infinity Level Section -->
+        <section id="infinity" class="info-section">
+            <div class="section-header">
+                <h2 class="section-title">인피니티 레벨</h2>
+            </div>
+            <div class="section-content">
+                <p>
+                    게임 후반에 기어는 어택 레벨 3보다 높은 <span class="highlight">인피니티 레벨</span>에 
+                    도달할 수 있습니다! 인피니티 레벨은 각 캐릭터의 두 번째 (또는 그 이상) 기어에서만 
+                    사용할 수 있습니다.
+                </p>
+
+                <p>
+                    엘리, 마리아, 에메랄다는 기어 바라가 없기 때문에 초기 기어에서도 인피니티 레벨을 
+                    사용할 수 있습니다. <span class="highlight">츄츄는 어택 레벨 자체가 없어서 인피니티 레벨도 없습니다.</span>
+                </p>
+
+                <div class="info-box">
+                    <div class="info-box-title">🔥 인피니티 레벨 진입 조건</div>
+                    <p style="margin: 0; color: var(--text-secondary);">
+                        먼저 어택 레벨 3이 되어야 합니다. 그 후 매 턴이 끝날 때마다 인피니티 레벨로 
+                        진입할 확률이 있습니다. 화면 오른쪽 스탯 박스에 "Hyper Mode"로 표시됩니다.
+                    </p>
+                </div>
+
+                <p>인피니티 레벨 진입 확률은 다음 요소에 따라 증가합니다:</p>
+                <ul class="info-list">
+                    <li>잃은 HP의 양</li>
+                    <li>공격한 횟수</li>
+                    <li>공격받은 횟수</li>
+                    <li>탑승 중인 기어의 종류</li>
+                </ul>
+
+                <p>
+                    인피니티 레벨에서는 세 가지 단일 버튼 필살기 중 하나를 사용할 수 있습니다. 
+                    가장 강력한 것은 ○ 공격이지만, 사용하려면 <span class="highlight">캐릭터 레벨이 최소 70</span>이어야 합니다. 
+                    인피니티 레벨은 3라운드 후 어택 레벨 0으로 돌아갑니다.
+                </p>
+
+                <div class="info-box">
+                    <div class="info-box-title">⭐ 제노기어스 특전</div>
+                    <p style="margin: 0; color: var(--text-secondary);">
+                        제노기어스(페이의 최종 기어)는 항상 99% 하이퍼 모드 상태입니다. 
+                        즉, 4라운드 후에는 거의 확실하게 인피니티 레벨에 진입할 수 있고, 
+                        그러면 <span class="highlight">기신흑장</span> 공격을 사용할 수 있습니다!
+                    </p>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="main-footer">
-        <p style="font-family: var(--font-display); font-size: 0.9rem; color: var(--text-secondary);">XENOGEARS SYSTEM INFORMATION</p>
-        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">Data structure inspired by GIA (Gaming Intelligence Agency).</p>
+        <div class="footer-content">
+            <p>XENOGEARS © 1998 SQUARE ENIX CO., LTD. All Rights Reserved.</p>
+        </div>
     </footer>
-
-    <script>
-        // 사이드바 메뉴 클릭 시 active 클래스 전환
-        const links = document.querySelectorAll('.menu-link');
-        links.forEach(link => {
-            link.addEventListener('click', function() {
-                links.forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-    </script>
 </body>
 </html>

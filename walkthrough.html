@@ -3,100 +3,387 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>제노기어스 공략 - WALKTHROUGH</title>
+    <title>공략 - 제노기어스 한국어 공략</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-/* index.html의 핵심 디자인 가이드라인 유지 */
 :root {
     --bg-primary: #000000;
     --bg-secondary: #080808;
     --bg-tertiary: #0f0f0f;
     --bg-card: #0a0a0a;
+    
     --text-primary: #ffffff;
     --text-secondary: #cccccc;
     --text-muted: #777777;
+    
     --accent-red: #ff0000;
     --accent-red-dark: #cc0000;
+    --accent-red-darker: #990000;
     --accent-glow: rgba(255, 0, 0, 0.5);
+    
     --border-color: #1a1a1a;
+    --border-glow: rgba(255, 0, 0, 0.3);
+    
     --font-display: 'Orbitron', sans-serif;
     --font-body: 'Noto Sans KR', sans-serif;
+    
     --container-width: 1200px;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
     --spacing-md: 1.5rem;
     --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: var(--font-body);
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    font-size: 16px;
     line-height: 1.7;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    min-height: 100vh;
     overflow-x: hidden;
 }
 
-/* Background Effects */
-.scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px); opacity: 0.3; }
-.bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; background: radial-gradient(circle at 50% 0%, rgba(153, 0, 0, 0.1) 0%, transparent 70%); }
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+    );
+    opacity: 0.3;
+}
 
-/* Header & Nav */
-.main-header { position: sticky; top: 0; z-index: 100; background: rgba(0, 0, 0, 0.9); border-bottom: 1px solid var(--border-color); backdrop-filter: blur(10px); }
-.header-content { max-width: var(--container-width); margin: 0 auto; padding: 1rem var(--spacing-md); display: flex; justify-content: space-between; align-items: center; }
-.logo-section { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
-.gear-icon { font-size: 1.5rem; color: var(--accent-red); animation: spin 10s linear infinite; }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.main-title { font-family: var(--font-display); font-size: 1.2rem; color: #fff; letter-spacing: 1px; }
-.main-nav { display: flex; gap: 0.5rem; }
-.nav-link { font-family: var(--font-display); font-size: 0.8rem; text-decoration: none; color: var(--text-secondary); padding: 0.5rem 1rem; border: 1px solid transparent; transition: 0.3s; }
-.nav-link:hover, .nav-link.active { color: var(--accent-red); border-color: var(--accent-red); background: rgba(255, 0, 0, 0.1); }
+.bg-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    background: 
+        radial-gradient(ellipse at 50% 0%, rgba(153, 0, 0, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 60%, rgba(153, 0, 0, 0.1) 0%, transparent 40%);
+}
 
-/* Layout Structure */
-.container { max-width: var(--container-width); margin: 0 auto; padding: var(--spacing-lg) var(--spacing-md); display: grid; grid-template-columns: 280px 1fr; gap: var(--spacing-lg); position: relative; z-index: 1; }
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    position: relative;
+    z-index: 1;
+}
 
-/* Sidebar Navigation */
-.sidebar { position: sticky; top: 100px; height: calc(100vh - 120px); overflow-y: auto; padding-right: 10px; }
-.sidebar::-webkit-scrollbar { width: 4px; }
-.sidebar::-webkit-scrollbar-thumb { background: var(--accent-red); }
-.chapter-list { list-style: none; }
-.chapter-item { margin-bottom: 0.5rem; }
-.chapter-link { display: block; padding: 0.6rem 1rem; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
-.chapter-link:hover { border-color: var(--accent-red); color: var(--text-primary); padding-left: 1.5rem; }
-.chapter-link.active { border-left: 4px solid var(--accent-red); background: var(--bg-tertiary); color: var(--accent-red); }
-.disc-label { font-family: var(--font-display); color: var(--accent-red); font-size: 0.75rem; margin: 1.5rem 0 0.5rem; padding-bottom: 5px; border-bottom: 1px solid var(--accent-red-dark); }
+/* Header */
+.main-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(180deg, var(--bg-primary) 0%, rgba(0, 0, 0, 0.95) 100%);
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+}
 
-/* Walkthrough Content */
-.content-area { background: var(--bg-card); border: 1px solid var(--border-color); padding: var(--spacing-lg); border-radius: 4px; }
-.content-header { margin-bottom: var(--spacing-lg); border-bottom: 1px solid var(--border-color); padding-bottom: var(--spacing-md); }
-.content-header h1 { font-family: var(--font-display); color: var(--accent-red); font-size: 2rem; margin-bottom: 0.5rem; }
-.content-header .meta { color: var(--text-muted); font-size: 0.9rem; }
+.header-content {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--spacing-sm) var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
 
-.section { margin-bottom: var(--spacing-lg); }
-.section h2 { font-family: var(--font-display); font-size: 1.4rem; color: #fff; margin-bottom: 1rem; border-left: 4px solid var(--accent-red); padding-left: 1rem; }
-.section p { margin-bottom: 1rem; color: var(--text-secondary); }
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
 
-/* Boss Box (GIA Style) */
-.boss-box { background: rgba(255, 0, 0, 0.05); border: 1px solid var(--accent-red-dark); padding: var(--spacing-md); margin: 1.5rem 0; border-radius: 4px; }
-.boss-header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--accent-red-dark); margin-bottom: 1rem; padding-bottom: 0.5rem; }
-.boss-name { font-family: var(--font-display); font-weight: 700; color: var(--accent-red); }
-.boss-stats { font-size: 0.85rem; color: var(--text-muted); }
-.boss-strategy { font-size: 0.95rem; }
-.boss-strategy strong { color: #fff; }
+.gear-icon {
+    font-size: 2.5rem;
+    color: var(--accent-red);
+    animation: spin 10s linear infinite;
+    text-shadow: 0 0 20px var(--accent-glow);
+}
 
-/* Item List */
-.item-box { background: var(--bg-tertiary); border: 1px solid var(--border-color); padding: 1rem; margin-bottom: 1.5rem; }
-.item-box h4 { font-size: 0.9rem; color: var(--accent-red); text-transform: uppercase; margin-bottom: 0.5rem; }
-.item-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.85rem; color: var(--text-secondary); }
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.title-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-title {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    background: linear-gradient(135deg, var(--text-primary), var(--accent-red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-decoration: none;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+/* Navigation */
+.main-nav {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--text-secondary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.05em;
+}
+
+.nav-link:hover {
+    color: var(--accent-red);
+    border-color: var(--border-glow);
+    background: rgba(255, 0, 0, 0.1);
+}
+
+.nav-link.active {
+    color: var(--accent-red);
+    border-color: var(--accent-red);
+    background: rgba(255, 0, 0, 0.15);
+}
+
+/* Page Title */
+.page-header {
+    text-align: center;
+    padding: var(--spacing-xl) 0 var(--spacing-lg);
+}
+
+.page-title {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-red);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 20px var(--accent-glow);
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+/* Quick Links */
+.quick-nav {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-xl);
+}
+
+.quick-link {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: var(--text-secondary);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.quick-link:hover {
+    color: var(--accent-red);
+    border-color: var(--accent-red);
+    background: rgba(255, 0, 0, 0.1);
+}
+
+/* Disc Section */
+.disc-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.disc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--accent-red-dark);
+}
+
+.disc-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-red);
+    letter-spacing: 0.1em;
+}
+
+.disc-badge {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    padding: 2px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+/* Chapter Grid */
+.chapter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.chapter-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.chapter-item:hover {
+    border-color: var(--accent-red);
+    background: rgba(255, 0, 0, 0.05);
+    transform: translateX(5px);
+}
+
+.chapter-num {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent-red);
+    min-width: 60px;
+}
+
+.chapter-name {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.chapter-name-kr {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Sidequest Section */
+.sidequest-section {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.sidequest-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.sidequest-title::before {
+    content: '★';
+    color: var(--accent-red);
+}
+
+.sidequest-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--spacing-sm);
+}
 
 /* Footer */
-.main-footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 2rem; text-align: center; }
+.main-footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    padding: var(--spacing-lg) var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
 
-@media (max-width: 900px) {
-    .container { grid-template-columns: 1fr; }
-    .sidebar { position: relative; height: auto; top: 0; margin-bottom: 2rem; }
-    .chapter-list { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; }
-    .chapter-link { white-space: nowrap; }
+.footer-content {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-content p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .logo-section {
+        flex-direction: column;
+    }
+    
+    .main-nav {
+        justify-content: center;
+    }
+    
+    .page-title {
+        font-size: 1.8rem;
+    }
+    
+    .chapter-grid {
+        grid-template-columns: 1fr;
+    }
 }
     </style>
 </head>
@@ -106,12 +393,13 @@ body {
     
     <header class="main-header">
         <div class="header-content">
-            <a href="index.html" class="logo-section">
+            <div class="logo-section">
                 <div class="gear-icon">⚙</div>
                 <div class="title-block">
-                    <h1 class="main-title">XENOGEARS</h1>
+                    <a href="index.html" class="main-title">XENOGEARS</a>
+                    <p class="subtitle">한국어 공략 가이드</p>
                 </div>
-            </a>
+            </div>
             <nav class="main-nav">
                 <a href="index.html" class="nav-link">가이드</a>
                 <a href="walkthrough.html" class="nav-link active">공략</a>
@@ -123,87 +411,306 @@ body {
     </header>
 
     <main class="container">
-        <aside class="sidebar">
-            <div class="disc-label">DISC 1</div>
-            <ul class="chapter-list">
-                <li class="chapter-item"><a href="#ch1" class="chapter-link active">01. Lahan Village</a></li>
-                <li class="chapter-item"><a href="#ch2" class="chapter-link">02. Mountain Path</a></li>
-                <li class="chapter-item"><a href="#ch3" class="chapter-link">03. Blackmoon Forest</a></li>
-                <li class="chapter-item"><a href="#ch4" class="chapter-link">04. Dazil / Desert</a></li>
-                <li class="chapter-item"><a href="#ch5" class="chapter-link">05. Stalactite Cave</a></li>
-                <li class="chapter-item"><a href="#" class="chapter-link">... (More Chapters)</a></li>
-            </ul>
-            <div class="disc-label">DISC 2</div>
-            <ul class="chapter-list">
-                <li class="chapter-item"><a href="#" class="chapter-link">53. First Stage</a></li>
-                <li class="chapter-item"><a href="#" class="chapter-link">64. Final Battle</a></li>
-            </ul>
-        </aside>
+        <section class="page-header">
+            <h1 class="page-title">WALKTHROUGH</h1>
+            <p class="page-subtitle">전 64개 챕터 + 사이드퀘스트 완벽 공략</p>
+        </section>
 
-        <article class="content-area">
-            <header class="content-header">
-                <div class="meta">Chapter 01</div>
-                <h1>Lahan Village (라한 마을)</h1>
-            </header>
+        <nav class="quick-nav">
+            <a href="#disc1" class="quick-link">DISC 1</a>
+            <a href="#disc2" class="quick-link">DISC 2</a>
+            <a href="#sidequest" class="quick-link">사이드퀘스트</a>
+            <a href="info.html" class="quick-link">게임 시스템</a>
+        </nav>
 
-            <section class="section">
-                <h2>Overview</h2>
-                <p>게임의 시작점입니다. 이곳에서는 기본적인 조작법을 익히고 아이템을 수집하며 스토리를 진행하게 됩니다. 웡 페이 퐁(Fei)의 평화로운 일상이 깨지기 전, 마을의 모든 구석을 탐색하세요.</p>
-                
-                <div class="item-box">
-                    <h4>획득 가능 아이템</h4>
-                    <div class="item-list">
-                        <span>• 200 G (티모시의 집)</span>
-                        <span>• Spider Web (민가)</span>
-                        <span>• Aquasol (촌장의 집)</span>
-                        <span>• Eyeball (촌장의 집)</span>
-                    </div>
+        <!-- DISC 1 -->
+        <section id="disc1" class="disc-section">
+            <div class="disc-header">
+                <h2 class="disc-title">DISC 1</h2>
+                <span class="disc-badge">Chapter 1-48</span>
+            </div>
+            <div class="chapter-grid">
+                <a href="walk/walk1.html" class="chapter-item">
+                    <span class="chapter-num">CH.01</span>
+                    <span class="chapter-name">Lahan Village<span class="chapter-name-kr">라한 마을</span></span>
+                </a>
+                <a href="walk/walk2.html" class="chapter-item">
+                    <span class="chapter-num">CH.02</span>
+                    <span class="chapter-name">Mountain Path<span class="chapter-name-kr">산길</span></span>
+                </a>
+                <a href="walk/walk3.html" class="chapter-item">
+                    <span class="chapter-num">CH.03</span>
+                    <span class="chapter-name">Fallen Shadows<span class="chapter-name-kr">떨어진 그림자</span></span>
+                </a>
+                <a href="walk/walk4.html" class="chapter-item">
+                    <span class="chapter-num">CH.04</span>
+                    <span class="chapter-name">Into the Forest<span class="chapter-name-kr">숲속으로</span></span>
+                </a>
+                <a href="walk/walk5.html" class="chapter-item">
+                    <span class="chapter-num">CH.05</span>
+                    <span class="chapter-name">Girl in Forest<span class="chapter-name-kr">숲속의 소녀</span></span>
+                </a>
+                <a href="walk/walk6.html" class="chapter-item">
+                    <span class="chapter-num">CH.06</span>
+                    <span class="chapter-name">Dazil<span class="chapter-name-kr">다지르</span></span>
+                </a>
+                <a href="walk/walk7.html" class="chapter-item">
+                    <span class="chapter-num">CH.07</span>
+                    <span class="chapter-name">Desert Attack!<span class="chapter-name-kr">사막의 습격!</span></span>
+                </a>
+                <a href="walk/walk8.html" class="chapter-item">
+                    <span class="chapter-num">CH.08</span>
+                    <span class="chapter-name">Stalactite Cave<span class="chapter-name-kr">종유동</span></span>
+                </a>
+                <a href="walk/walk9.html" class="chapter-item">
+                    <span class="chapter-num">CH.09</span>
+                    <span class="chapter-name">Pirate's Lair<span class="chapter-name-kr">해적의 아지트</span></span>
+                </a>
+                <a href="walk/walk10.html" class="chapter-item">
+                    <span class="chapter-num">CH.10</span>
+                    <span class="chapter-name">Operation Ave<span class="chapter-name-kr">아베 잠입 작전</span></span>
+                </a>
+                <a href="walk/walk11.html" class="chapter-item">
+                    <span class="chapter-num">CH.11</span>
+                    <span class="chapter-name">The Tournament<span class="chapter-name-kr">대무술대회</span></span>
+                </a>
+                <a href="walk/walk12.html" class="chapter-item">
+                    <span class="chapter-num">CH.12</span>
+                    <span class="chapter-name">Maru's Rescue<span class="chapter-name-kr">마르그레테 구출</span></span>
+                </a>
+                <a href="walk/walk13.html" class="chapter-item">
+                    <span class="chapter-num">CH.13</span>
+                    <span class="chapter-name">Road to Nisan<span class="chapter-name-kr">니산으로 가는 길</span></span>
+                </a>
+                <a href="walk/walk14.html" class="chapter-item">
+                    <span class="chapter-num">CH.14</span>
+                    <span class="chapter-name">City of Peace<span class="chapter-name-kr">평화의 도시</span></span>
+                </a>
+                <a href="walk/walk15.html" class="chapter-item">
+                    <span class="chapter-num">CH.15</span>
+                    <span class="chapter-name">Recapture Ave<span class="chapter-name-kr">아베 탈환</span></span>
+                </a>
+                <a href="walk/walk16.html" class="chapter-item">
+                    <span class="chapter-num">CH.16</span>
+                    <span class="chapter-name">Desert Despair<span class="chapter-name-kr">사막의 절망</span></span>
+                </a>
+                <a href="walk/walk17.html" class="chapter-item">
+                    <span class="chapter-num">CH.17</span>
+                    <span class="chapter-name">Kislev Capital<span class="chapter-name-kr">키슬레브 제도</span></span>
+                </a>
+                <a href="walk/walk18.html" class="chapter-item">
+                    <span class="chapter-num">CH.18</span>
+                    <span class="chapter-name">Brave Battlers<span class="chapter-name-kr">용감한 배틀러들</span></span>
+                </a>
+                <a href="walk/walk19.html" class="chapter-item">
+                    <span class="chapter-num">CH.19</span>
+                    <span class="chapter-name">Sewer Horror<span class="chapter-name-kr">지하 수도의 공포</span></span>
+                </a>
+                <a href="walk/walk20.html" class="chapter-item">
+                    <span class="chapter-num">CH.20</span>
+                    <span class="chapter-name">Battling Champ<span class="chapter-name-kr">배틀링 챔피언</span></span>
+                </a>
+                <a href="walk/walk21.html" class="chapter-item">
+                    <span class="chapter-num">CH.21</span>
+                    <span class="chapter-name">Gear Dock Raid<span class="chapter-name-kr">기어 격납고 침입</span></span>
+                </a>
+                <a href="walk/walk22.html" class="chapter-item">
+                    <span class="chapter-num">CH.22</span>
+                    <span class="chapter-name">Night Purge<span class="chapter-name-kr">한밤중의 숙청</span></span>
+                </a>
+                <a href="walk/walk23.html" class="chapter-item">
+                    <span class="chapter-num">CH.23</span>
+                    <span class="chapter-name">Secret Weapon<span class="chapter-name-kr">비밀 병기</span></span>
+                </a>
+                <a href="walk/walk24.html" class="chapter-item">
+                    <span class="chapter-num">CH.24</span>
+                    <span class="chapter-name">Escape Ignas<span class="chapter-name-kr">이그니스 탈출</span></span>
+                </a>
+                <a href="walk/walk25.html" class="chapter-item">
+                    <span class="chapter-num">CH.25</span>
+                    <span class="chapter-name">Adrift at Sea<span class="chapter-name-kr">바다 위의 표류</span></span>
+                </a>
+                <a href="walk/walk26.html" class="chapter-item">
+                    <span class="chapter-num">CH.26</span>
+                    <span class="chapter-name">Men of the Sea<span class="chapter-name-kr">바다의 사나이들</span></span>
+                </a>
+                <a href="walk/walk27.html" class="chapter-item">
+                    <span class="chapter-num">CH.27</span>
+                    <span class="chapter-name">Friends Again<span class="chapter-name-kr">다시 친구</span></span>
+                </a>
+                <a href="walk/walk28.html" class="chapter-item">
+                    <span class="chapter-num">CH.28</span>
+                    <span class="chapter-name">Betrayal<span class="chapter-name-kr">배신</span></span>
+                </a>
+                <a href="walk/walk29.html" class="chapter-item">
+                    <span class="chapter-num">CH.29</span>
+                    <span class="chapter-name">Ramsus' Attack<span class="chapter-name-kr">람서스의 습격</span></span>
+                </a>
+                <a href="walk/walk30.html" class="chapter-item">
+                    <span class="chapter-num">CH.30</span>
+                    <span class="chapter-name">A Young Priest<span class="chapter-name-kr">젊은 신부</span></span>
+                </a>
+                <a href="walk/walk31.html" class="chapter-item">
+                    <span class="chapter-num">CH.31</span>
+                    <span class="chapter-name">The Orphanage<span class="chapter-name-kr">고아원</span></span>
+                </a>
+                <a href="walk/walk32.html" class="chapter-item">
+                    <span class="chapter-num">CH.32</span>
+                    <span class="chapter-name">Reaper's Ship<span class="chapter-name-kr">사신의 배</span></span>
+                </a>
+                <a href="walk/walk33.html" class="chapter-item">
+                    <span class="chapter-num">CH.33</span>
+                    <span class="chapter-name">Burning Souls<span class="chapter-name-kr">불타는 영혼</span></span>
+                </a>
+                <a href="walk/walk34.html" class="chapter-item">
+                    <span class="chapter-num">CH.34</span>
+                    <span class="chapter-name">Ocean Floor<span class="chapter-name-kr">바다 밑바닥</span></span>
+                </a>
+                <a href="walk/walk35.html" class="chapter-item">
+                    <span class="chapter-num">CH.35</span>
+                    <span class="chapter-name">Deep Sea Girl<span class="chapter-name-kr">심해의 소녀</span></span>
+                </a>
+                <a href="walk/walk36.html" class="chapter-item">
+                    <span class="chapter-num">CH.36</span>
+                    <span class="chapter-name">Babel Tower<span class="chapter-name-kr">바벨 타워</span></span>
+                </a>
+                <a href="walk/walk37.html" class="chapter-item">
+                    <span class="chapter-num">CH.37</span>
+                    <span class="chapter-name">Sky City Shevat<span class="chapter-name-kr">천공의 도시 셰바트</span></span>
+                </a>
+                <a href="walk/walk38.html" class="chapter-item">
+                    <span class="chapter-num">CH.38</span>
+                    <span class="chapter-name">Intruder Alert!<span class="chapter-name-kr">침입자 경보!</span></span>
+                </a>
+                <a href="walk/walk39.html" class="chapter-item">
+                    <span class="chapter-num">CH.39</span>
+                    <span class="chapter-name">Raid of Shevat<span class="chapter-name-kr">셰바트 급습</span></span>
+                </a>
+                <a href="walk/walk40.html" class="chapter-item">
+                    <span class="chapter-num">CH.40</span>
+                    <span class="chapter-name">Protect Nisan!<span class="chapter-name-kr">니산을 지켜라!</span></span>
+                </a>
+                <a href="walk/walk41.html" class="chapter-item">
+                    <span class="chapter-num">CH.41</span>
+                    <span class="chapter-name">Gate 1 - Maru<span class="chapter-name-kr">게이트 1 - 마르그레테</span></span>
+                </a>
+                <a href="walk/walk42.html" class="chapter-item">
+                    <span class="chapter-num">CH.42</span>
+                    <span class="chapter-name">Gate 2 - Babel<span class="chapter-name-kr">게이트 2 - 바벨</span></span>
+                </a>
+                <a href="walk/walk43.html" class="chapter-item">
+                    <span class="chapter-num">CH.43</span>
+                    <span class="chapter-name">Gate 3 - The Deep<span class="chapter-name-kr">게이트 3 - 심해</span></span>
+                </a>
+                <a href="walk/walk44.html" class="chapter-item">
+                    <span class="chapter-num">CH.44</span>
+                    <span class="chapter-name">Into Solaris<span class="chapter-name-kr">솔라리스로</span></span>
+                </a>
+                <a href="walk/walk45.html" class="chapter-item">
+                    <span class="chapter-num">CH.45</span>
+                    <span class="chapter-name">Escape Solaris<span class="chapter-name-kr">솔라리스 탈출</span></span>
+                </a>
+                <a href="walk/walk46.html" class="chapter-item">
+                    <span class="chapter-num">CH.46</span>
+                    <span class="chapter-name">Lone Wolf<span class="chapter-name-kr">외로운 늑대</span></span>
+                </a>
+                <a href="walk/walk47.html" class="chapter-item">
+                    <span class="chapter-num">CH.47</span>
+                    <span class="chapter-name">Karellen's Lab<span class="chapter-name-kr">카렐렌의 연구소</span></span>
+                </a>
+                <a href="walk/walk48.html" class="chapter-item">
+                    <span class="chapter-num">CH.48</span>
+                    <span class="chapter-name">Tears for Fears<span class="chapter-name-kr">두려움에 대한 눈물</span></span>
+                </a>
+            </div>
+        </section>
+
+        <!-- DISC 2 -->
+        <section id="disc2" class="disc-section">
+            <div class="disc-header">
+                <h2 class="disc-title">DISC 2</h2>
+                <span class="disc-badge">Chapter 49-59</span>
+            </div>
+            <div class="chapter-grid">
+                <a href="walk/walk49.html" class="chapter-item">
+                    <span class="chapter-num">CH.49</span>
+                    <span class="chapter-name">Shot Down!<span class="chapter-name-kr">격추!</span></span>
+                </a>
+                <a href="walk/walk50.html" class="chapter-item">
+                    <span class="chapter-num">CH.50</span>
+                    <span class="chapter-name">Break the Seal<span class="chapter-name-kr">봉인 해제</span></span>
+                </a>
+                <a href="walk/walk51.html" class="chapter-item">
+                    <span class="chapter-num">CH.51</span>
+                    <span class="chapter-name">Soul Vessel<span class="chapter-name-kr">영혼의 그릇</span></span>
+                </a>
+                <a href="walk/walk52.html" class="chapter-item">
+                    <span class="chapter-num">CH.52</span>
+                    <span class="chapter-name">The Stars Know<span class="chapter-name-kr">별들은 알고 있다</span></span>
+                </a>
+                <a href="walk/walk53.html" class="chapter-item">
+                    <span class="chapter-num">CH.53</span>
+                    <span class="chapter-name">Above Mahanon<span class="chapter-name-kr">마하논 상공</span></span>
+                </a>
+                <a href="walk/walk54.html" class="chapter-item">
+                    <span class="chapter-num">CH.54</span>
+                    <span class="chapter-name">Paradise<span class="chapter-name-kr">낙원</span></span>
+                </a>
+                <a href="walk/walk55.html" class="chapter-item">
+                    <span class="chapter-num">CH.55</span>
+                    <span class="chapter-name">Promised Land<span class="chapter-name-kr">약속의 땅</span></span>
+                </a>
+                <a href="walk/walk56.html" class="chapter-item">
+                    <span class="chapter-num">CH.56</span>
+                    <span class="chapter-name">Merkava Calls<span class="chapter-name-kr">메르카바의 부름</span></span>
+                </a>
+                <a href="walk/walk57.html" class="chapter-item">
+                    <span class="chapter-num">CH.57</span>
+                    <span class="chapter-name">Dreams...<span class="chapter-name-kr">꿈...</span></span>
+                </a>
+                <a href="walk/walk58.html" class="chapter-item">
+                    <span class="chapter-num">CH.58</span>
+                    <span class="chapter-name">Fallen Star<span class="chapter-name-kr">추락한 별</span></span>
+                </a>
+                <a href="walk/walk59.html" class="chapter-item">
+                    <span class="chapter-num">CH.59</span>
+                    <span class="chapter-name">First and Last (1)<span class="chapter-name-kr">태초이자 끝 (상)</span></span>
+                </a>
+                <a href="walk/walk64.html" class="chapter-item">
+                    <span class="chapter-num">CH.59</span>
+                    <span class="chapter-name">First and Last (2)<span class="chapter-name-kr">태초이자 끝 (하)</span></span>
+                </a>
+            </div>
+
+            <!-- Sidequests -->
+            <div id="sidequest" class="sidequest-section">
+                <h3 class="sidequest-title">사이드퀘스트</h3>
+                <div class="sidequest-grid">
+                    <a href="walk/walk60.html" class="chapter-item">
+                        <span class="chapter-num">SIDE 1</span>
+                        <span class="chapter-name">Taura's House<span class="chapter-name-kr">타우라의 집</span></span>
+                    </a>
+                    <a href="walk/walk61.html" class="chapter-item">
+                        <span class="chapter-num">SIDE 2</span>
+                        <span class="chapter-name">The Lighthouse<span class="chapter-name-kr">등대</span></span>
+                    </a>
+                    <a href="walk/walk62.html" class="chapter-item">
+                        <span class="chapter-num">SIDE 3</span>
+                        <span class="chapter-name">Sandman's Isle<span class="chapter-name-kr">샌드맨스섬</span></span>
+                    </a>
+                    <a href="walk/walk63.html" class="chapter-item">
+                        <span class="chapter-num">SIDE 4</span>
+                        <span class="chapter-name">Battling<span class="chapter-name-kr">배틀링</span></span>
+                    </a>
                 </div>
-            </section>
-
-            <section class="section">
-                <h2>Walkthrough</h2>
-                <p>1. 웡 페이 퐁의 방에서 시작합니다. 책상 근처를 조사해 소량의 골드를 얻을 수 있습니다.</p>
-                <p>2. 촌장의 집으로 가서 전투 시스템(AP 및 콤보)에 대한 설명을 들으세요. 이 정보는 나중에 매우 중요합니다.</p>
-                <p>3. 마을 북동쪽에 있는 앨리스의 집으로 향하세요. 댄과의 대화 이벤트가 발생합니다.</p>
-            </section>
-
-            <section class="section">
-                <h2>Boss: Rankar Dragon</h2>
-                <div class="boss-box">
-                    <div class="boss-header">
-                        <span class="boss-name">RANKAR DRAGON</span>
-                        <span class="boss-stats">HP: 480 | EXP: 348 | G: 0</span>
-                    </div>
-                    <div class="boss-strategy">
-                        <p><strong>Strategy:</strong> 이 전투는 웰트올(Weltall)에 탑승한 상태로 진행됩니다. 초기 단계에서는 일반 공격으로 AP를 모으세요.</p>
-                        <p>보스의 공격력은 강하지만 웰트올의 방어력으로 충분히 버틸 수 있습니다. <strong>X버튼 공격</strong>을 위주로 사용하여 데미지를 누적시키고, 필요시 Aquasol S를 사용하여 회복하세요.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section">
-                <div style="display: flex; justify-content: space-between; margin-top: 3rem;">
-                    <span style="color: var(--text-muted);">이전: -</span>
-                    <a href="#ch2" style="color: var(--accent-red); text-decoration: none; font-weight: bold;">다음: Mountain Path ▹</a>
-                </div>
-            </section>
-        </article>
+            </div>
+        </section>
     </main>
 
     <footer class="main-footer">
-        <p style="font-family: var(--font-display); font-size: 0.9rem; color: var(--text-secondary);">XENOGEARS WALKTHROUGH GUIDE</p>
-        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">Based on Gaming Intelligence Agency Guide Data.</p>
+        <div class="footer-content">
+            <p>XENOGEARS © 1998 SQUARE ENIX CO., LTD. All Rights Reserved.</p>
+        </div>
     </footer>
-
-    <script>
-        // 간단한 탭 활성화 예시 스크립트
-        document.querySelectorAll('.chapter-link').forEach(link => {
-            link.addEventListener('click', function() {
-                document.querySelector('.chapter-link.active').classList.remove('active');
-                this.classList.add('active');
-            });
-        });
-    </script>
 </body>
 </html>
