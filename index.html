@@ -1,12 +1,767 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Page</title>
+    <title>제노기어스 한글패치 공략</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+/* ==========================================
+   제노기어스 한글패치 공략 가이드
+   Retro Cyberpunk Style
+   ========================================== */
+
+:root {
+    --bg-primary: #0a0a12;
+    --bg-secondary: #12121f;
+    --bg-tertiary: #1a1a2e;
+    --bg-card: #16162a;
+    
+    --text-primary: #e8e8f0;
+    --text-secondary: #a0a0b8;
+    --text-muted: #6a6a80;
+    
+    --accent-cyan: #00d4ff;
+    --accent-magenta: #ff006e;
+    --accent-gold: #ffd700;
+    --accent-green: #00ff88;
+    
+    --border-color: #2a2a45;
+    --border-glow: rgba(0, 212, 255, 0.3);
+    
+    --font-display: 'Orbitron', sans-serif;
+    --font-body: 'Noto Sans KR', sans-serif;
+    
+    --container-width: 1200px;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Scanlines Effect */
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+    );
+    opacity: 0.3;
+}
+
+.noise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+/* Header */
+.main-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(180deg, var(--bg-primary) 0%, rgba(10, 10, 18, 0.95) 100%);
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+}
+
+.header-content {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--spacing-sm) var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.gear-icon {
+    font-size: 2.5rem;
+    color: var(--accent-cyan);
+    animation: spin 10s linear infinite;
+    text-shadow: 0 0 20px var(--accent-cyan);
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.title-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-title {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+/* Navigation */
+.main-nav {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--text-secondary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.05em;
+}
+
+.nav-link:hover {
+    color: var(--accent-cyan);
+    border-color: var(--border-glow);
+    background: rgba(0, 212, 255, 0.1);
+}
+
+.nav-link.active {
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+    background: rgba(0, 212, 255, 0.15);
+}
+
+/* Hero Section */
+.hero-section {
+    padding: var(--spacing-xl) 0;
+}
+
+.hero-content {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--spacing-xl);
+    align-items: center;
+}
+
+.hero-text {
+    max-width: 700px;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-bottom: var(--spacing-md);
+    letter-spacing: 0.1em;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-cyan), transparent);
+    margin-top: var(--spacing-xs);
+}
+
+/* Glitch Effect */
+.glitch {
+    position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--accent-magenta);
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 var(--accent-green);
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim-2 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+    0%, 100% { clip: rect(42px, 9999px, 44px, 0); }
+    25% { clip: rect(12px, 9999px, 59px, 0); }
+    50% { clip: rect(48px, 9999px, 29px, 0); }
+    75% { clip: rect(42px, 9999px, 73px, 0); }
+}
+
+@keyframes glitch-anim-2 {
+    0%, 100% { clip: rect(65px, 9999px, 100px, 0); }
+    25% { clip: rect(52px, 9999px, 74px, 0); }
+    50% { clip: rect(79px, 9999px, 85px, 0); }
+    75% { clip: rect(75px, 9999px, 102px, 0); }
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.8;
+}
+
+.hero-description strong {
+    color: var(--accent-gold);
+}
+
+/* Buttons */
+.hero-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.btn {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.05em;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-cyan), #0099cc);
+    color: var(--bg-primary);
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 212, 255, 0.5);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    background: rgba(0, 212, 255, 0.1);
+}
+
+/* Gear Animation */
+.hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gear-animation {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+.gear {
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid var(--accent-cyan);
+    opacity: 0.6;
+}
+
+.gear::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    height: 30%;
+    border-radius: 50%;
+    background: var(--accent-cyan);
+    opacity: 0.3;
+}
+
+.gear.large {
+    width: 180px;
+    height: 180px;
+    top: 10px;
+    left: 10px;
+    animation: spin 15s linear infinite;
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.3), inset 0 0 30px rgba(0, 212, 255, 0.1);
+}
+
+.gear.medium {
+    width: 100px;
+    height: 100px;
+    top: 50px;
+    left: 50px;
+    animation: spin 10s linear infinite reverse;
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.gear.medium::before {
+    background: var(--accent-gold);
+}
+
+.gear.small {
+    width: 50px;
+    height: 50px;
+    top: 75px;
+    left: 75px;
+    animation: spin 5s linear infinite;
+    border-color: var(--accent-magenta);
+    box-shadow: 0 0 15px rgba(255, 0, 110, 0.3);
+}
+
+.gear.small::before {
+    background: var(--accent-magenta);
+}
+
+/* Quick Links Grid */
+.quick-links {
+    padding: var(--spacing-xl) 0;
+}
+
+.link-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.link-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: var(--spacing-lg);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-align: center;
+    cursor: pointer;
+}
+
+.link-card:hover {
+    border-color: var(--accent-cyan);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.link-card h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: 0.05em;
+}
+
+.link-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* Info Box */
+.patch-info {
+    padding: var(--spacing-xl) 0;
+}
+
+.info-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: var(--spacing-lg);
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: var(--spacing-lg);
+}
+
+.info-content h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--accent-gold);
+    margin: var(--spacing-md) 0 var(--spacing-sm);
+    letter-spacing: 0.05em;
+}
+
+.info-content h3:first-child {
+    margin-top: 0;
+}
+
+.info-content ul {
+    list-style: none;
+    padding-left: var(--spacing-md);
+}
+
+.info-content li {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+    position: relative;
+}
+
+.info-content li::before {
+    content: '▹';
+    color: var(--accent-cyan);
+    position: absolute;
+    left: -1.2rem;
+}
+
+.info-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.stat-box {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: var(--spacing-sm);
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Credits */
+.credits-section {
+    padding: var(--spacing-xl) 0;
+}
+
+.credits-content {
+    background: var(--bg-tertiary);
+    border-left: 3px solid var(--accent-cyan);
+    padding: var(--spacing-md);
+    border-radius: 0 4px 4px 0;
+}
+
+.credits-content p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.credits-original {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Footer */
+.main-footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    padding: var(--spacing-lg) var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+
+.footer-content {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-content p {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+}
+
+.footer-note {
+    font-family: var(--font-body) !important;
+    font-size: 0.75rem !important;
+    color: var(--text-muted) !important;
+    margin-top: var(--spacing-sm);
+    line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-visual {
+        display: none;
+    }
+    
+    .info-box {
+        grid-template-columns: 1fr;
+    }
+    
+    .info-sidebar {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .stat-box {
+        flex: 1;
+        min-width: 100px;
+    }
+}
+
+@media (max-width: 600px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .logo-section {
+        flex-direction: column;
+    }
+    
+    .main-nav {
+        justify-content: center;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .link-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+    </style>
 </head>
 <body>
-    <h1>Welcome to My Website</h1>
-    <p>This is a simple website hosted on GitHub Pages.</p>
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="gear-icon">⚙</div>
+                <div class="title-block">
+                    <h1 class="main-title">XENOGEARS</h1>
+                    <p class="subtitle">한글패치 공략 가이드</p>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link active">가이드</a>
+                <a href="walkthrough.html" class="nav-link">공략</a>
+                <a href="characters.html" class="nav-link">캐릭터</a>
+                <a href="info.html" class="nav-link">정보</a>
+                <a href="story.html" class="nav-link">스토리</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2 class="section-title glitch" data-text="WELCOME">WELCOME</h2>
+                    <p class="hero-description">
+                        1998년 스퀘어에서 발매한 전설적인 RPG <strong>제노기어스</strong>의 
+                        한글패치 전용 공략 가이드입니다. 이 가이드는 한글패치와 함께 배포되며, 
+                        복잡한 스토리와 게임 시스템을 이해하는 데 도움을 드립니다.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="walkthrough.html" class="btn btn-primary">공략 시작하기</a>
+                        <a href="info.html" class="btn btn-secondary">게임 시스템</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="gear-animation">
+                        <div class="gear large"></div>
+                        <div class="gear medium"></div>
+                        <div class="gear small"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-links">
+            <h2 class="section-title">바로가기</h2>
+            <div class="link-grid">
+                <a href="walkthrough.html" class="link-card">
+                    <div class="card-icon">📖</div>
+                    <h3>챕터별 공략</h3>
+                    <p>디스크 1~2 전체 공략<br>총 64개 챕터</p>
+                </a>
+                <a href="characters.html" class="link-card">
+                    <div class="card-icon">👥</div>
+                    <h3>캐릭터 & 기어</h3>
+                    <p>파티원 분석 및<br>기어 정보</p>
+                </a>
+                <a href="info.html#faq" class="link-card">
+                    <div class="card-icon">❓</div>
+                    <h3>자주 묻는 질문</h3>
+                    <p>막히는 부분<br>해결책</p>
+                </a>
+                <a href="info.html#system" class="link-card">
+                    <div class="card-icon">⚔️</div>
+                    <h3>전투 시스템</h3>
+                    <p>AP, 필살기<br>기어 전투</p>
+                </a>
+                <a href="info.html#infinity" class="link-card">
+                    <div class="card-icon">∞</div>
+                    <h3>인피니티 레벨</h3>
+                    <p>기어 무한 모드<br>해금 조건</p>
+                </a>
+                <a href="story.html" class="link-card">
+                    <div class="card-icon">📜</div>
+                    <h3>스토리 해설</h3>
+                    <p>복잡한 세계관<br>완벽 정리</p>
+                </a>
+            </div>
+        </section>
+
+        <section class="patch-info">
+            <h2 class="section-title">한글패치 안내</h2>
+            <div class="info-box">
+                <div class="info-content">
+                    <h3>📌 패치 적용 전 확인사항</h3>
+                    <ul>
+                        <li>원본 제노기어스 ISO 파일 (NTSC-U/J)</li>
+                        <li>패치 프로그램 실행 환경</li>
+                        <li>PlayStation 에뮬레이터 (DuckStation 권장)</li>
+                    </ul>
+                    
+                    <h3>📌 플레이 권장사항</h3>
+                    <ul>
+                        <li>자주 세이브하세요. 이 게임은 길고 복잡합니다.</li>
+                        <li>대화와 텍스트를 꼼꼼히 읽으세요. 스토리가 매우 중요합니다.</li>
+                        <li>막히면 이 가이드를 참고하세요!</li>
+                    </ul>
+                </div>
+                <div class="info-sidebar">
+                    <div class="stat-box">
+                        <span class="stat-number">64</span>
+                        <span class="stat-label">챕터</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">60+</span>
+                        <span class="stat-label">플레이 시간</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">플레이어블 캐릭터</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="credits-section">
+            <h2 class="section-title">크레딧</h2>
+            <div class="credits-content">
+                <p>
+                    이 가이드는 Gaming Intelligence Agency의 Fritz Fraundorf가 작성한 
+                    원본 영문 공략을 기반으로 제작되었습니다. 한글패치 팀에서 번역 및 
+                    현지화하여 한국 유저분들께 제공합니다.
+                </p>
+                <p class="credits-original">
+                    Original Guide by Fritz Fraundorf © 1999 Gaming Intelligence Agency
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>제노기어스 한글패치 공략 가이드</p>
+            <p class="footer-note">
+                XENOGEARS © 1998 SQUARE ENIX CO., LTD. All Rights Reserved.<br>
+                이 사이트는 팬 프로젝트이며 스퀘어 에닉스와 관련이 없습니다.
+            </p>
+        </div>
+    </footer>
 </body>
 </html>
