@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>캐릭터 - 제노기어스 한글패치 공략</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --bg-primary: #000000;
+    --bg-secondary: #080808;
+    --bg-tertiary: #0f0f0f;
+    --bg-card: #0a0a0a;
+    
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --text-muted: #777777;
+    
+    --accent-red: #ff0000;
+    --accent-red-dark: #cc0000;
+    --accent-red-darker: #990000;
+    --accent-glow: rgba(255, 0, 0, 0.5);
+    
+    --border-color: #1a1a1a;
+    --border-glow: rgba(255, 0, 0, 0.3);
+    
+    --font-display: 'Orbitron', sans-serif;
+    --font-body: 'Noto Sans KR', sans-serif;
+    
+    --container-width: 1200px;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+    );
+    opacity: 0.3;
+}
+
+.bg-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    background: 
+        radial-gradient(ellipse at 50% 0%, rgba(153, 0, 0, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 60%, rgba(153, 0, 0, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 20% 80%, rgba(153, 0, 0, 0.08) 0%, transparent 40%);
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+.main-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(180deg, var(--bg-primary) 0%, rgba(0, 0, 0, 0.95) 100%);
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+}
+
+.header-content {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--spacing-sm) var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.gear-icon {
+    font-size: 2.5rem;
+    color: var(--accent-red);
+    animation: spin 10s linear infinite;
+    text-shadow: 0 0 20px var(--accent-glow);
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.title-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-title {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    background: linear-gradient(135deg, var(--text-primary), var(--accent-red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-decoration: none;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+/* Navigation */
+.main-nav {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--text-secondary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.05em;
+}
+
+.nav-link:hover {
+    color: var(--accent-red);
+    border-color: var(--border-glow);
+    background: rgba(255, 0, 0, 0.1);
+}
+
+.nav-link.active {
+    color: var(--accent-red);
+    border-color: var(--accent-red);
+    background: rgba(255, 0, 0, 0.15);
+}
+
+/* Hero Banner */
+.hero-banner {
+    width: 100%;
+    padding: var(--spacing-lg) 0;
+    text-align: center;
+}
+
+.banner-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.page-title {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-red);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 20px var(--accent-glow);
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.click-hint {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+}
+
+.click-hint::before,
+.click-hint::after {
+    content: '―';
+    color: var(--accent-red-dark);
+}
+
+/* Character Grid */
+.character-section {
+    padding: var(--spacing-xl) 0;
+}
+
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.character-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+}
+
+.character-card:hover {
+    border-color: var(--accent-red);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(255, 0, 0, 0.25);
+}
+
+.character-card:hover .character-image img {
+    transform: scale(1.05);
+}
+
+.character-card:hover .character-name {
+    color: var(--accent-red);
+}
+
+.character-image {
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, var(--bg-tertiary) 0%, var(--bg-primary) 100%);
+}
+
+.character-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.character-info {
+    padding: var(--spacing-md);
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+}
+
+.character-name {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+}
+
+.character-name-en {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Footer */
+.main-footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    padding: var(--spacing-lg) var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+
+.footer-content {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-content p {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+}
+
+.footer-note {
+    font-family: var(--font-body) !important;
+    font-size: 0.75rem !important;
+    color: var(--text-muted) !important;
+    margin-top: var(--spacing-sm);
+    line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .character-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .character-image {
+        height: 240px;
+    }
+}
+
+@media (max-width: 600px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .logo-section {
+        flex-direction: column;
+    }
+    
+    .main-nav {
+        justify-content: center;
+    }
+    
+    .character-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .character-image {
+        height: 300px;
+    }
+    
+    .page-title {
+        font-size: 1.8rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+    <div class="scanlines"></div>
+    
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="gear-icon">⚙</div>
+                <div class="title-block">
+                    <a href="index.html" class="main-title">XENOGEARS</a>
+                    <p class="subtitle">한글패치 공략 가이드</p>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link">가이드</a>
+                <a href="walkthrough.html" class="nav-link">공략</a>
+                <a href="characters.html" class="nav-link active">캐릭터</a>
+                <a href="info.html" class="nav-link">정보</a>
+                <a href="story.html" class="nav-link">스토리</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero-banner">
+            <img src="Chaill/characters-banner.png" alt="제노기어스 동료들" class="banner-image">
+            <h1 class="page-title">CHARACTERS</h1>
+            <p class="page-subtitle">제노기어스의 플레이어블 캐릭터들</p>
+            <p class="click-hint">일러스트를 클릭하면 상세 정보를 확인할 수 있습니다</p>
+        </section>
+
+        <section class="character-section">
+            <div class="character-grid">
+                <!-- 페이 -->
+                <a href="char-fei.html" class="character-card">
+                    <div class="character-image">
+                        <img src="Chaill/fei.png" alt="웡 페이 퐁">
+                    </div>
+                    <div class="character-info">
+                        <h3 class="character-name">웡 페이 퐁</h3>
+                        <p class="character-name-en">Wong Fei Fong</p>
+                    </div>
+                </a>
+
+                <!-- 엘리 -->
+                <a href="char-elly.html" class="character-card">
+                    <div class="character-image">
+                        <img src="Chaill/elly.png" alt="엘레하임 반 호텐">
+                    </div>
+                    <div class="character-info">
+                        <h3 class="character-name">엘레하임 반 호텐</h3>
+                        <p class="character-name-en">Elehayym Van Houten</p>
+                    </div>
+                </a>
+
+                <!-- 시탄 -->
+                <a href="char-citan.html" class="character-card">
+                    <div class="character-image">
+                        <img src="Chaill/citan.png" alt="시탄 우즈키">
+                    </div>
+                    <div class="character-info">
+                        <h3 class="character-name">시탄 우즈키</h3>
+                        <p class="character-name-en">Shitan Uzuki</p>
+                    </div>
+                </a>
+
+                <!-- 바르트 -->
+                <a href="char-bart.html" class="character-card">
+                    <div class="character-image">
+                        <img src="Chaill/bart.png" alt="바르톨로메이 파티마">
+                    </div>
+                    <div class="character-info">
+                        <h3 class="character-name">바르톨로메이 파티마</h3>
+                        <p class="character-name-en">Barthlomei Fatima</p>
+                    </div>
+                </a>
+
+                <!-- 빌리 -->
+                <a href="char-billy.html" class="character-card">
+                    <div class="character-image">
+                        <img src="Chaill/billy.png" alt="빌리 리 블랙">
+                    </div>
+                    <div class="character-info">
+                        <h3 class="character-name">빌리 리 블랙</h3>
+                        <p class="character-name-en">Billy Lee Black</p>
+                    </div>
+                </a>
+
+                <!-- 리코 -->
+                <a href="char-rico.html" class="character-card">
+                    <div class="character-image">
+                        <img src="Chaill/rico.png" alt="리카르도 반데라스">
+                    </div>
+                    <div class="character-info">
+                        <h3 class="character-name">리카르도 반데라스</h3>
+                        <p class="character-name-en">Richardo Banderas</p>
+                    </div>
+                </a>
+
+                <!-- 에메랄다 -->
+                <a href="char-emeralda.html" class="character-card">
+                    <div class="character-image">
+                        <img src="Chaill/emeralda.png" alt="에메랄다">
+                    </div>
+                    <div class="character-info">
+                        <h3 class="character-name">에메랄다</h3>
+                        <p class="character-name-en">Emeralda</p>
+                    </div>
+                </a>
+
+                <!-- 마리아 -->
+                <a href="char-maria.html" class="character-card">
+                    <div class="character-image">
+                        <img src="Chaill/maria.png" alt="마리아 발타자르">
+                    </div>
+                    <div class="character-info">
+                        <h3 class="character-name">마리아 발타자르</h3>
+                        <p class="character-name-en">Maria Balthasar</p>
+                    </div>
+                </a>
+
+                <!-- 츄츄 -->
+                <a href="char-chuchu.html" class="character-card">
+                    <div class="character-image">
+                        <img src="Chaill/chuchu.png" alt="츄츄">
+                    </div>
+                    <div class="character-info">
+                        <h3 class="character-name">츄츄</h3>
+                        <p class="character-name-en">ChuChu</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>제노기어스 한글패치 공략 가이드</p>
+            <p class="footer-note">
+                XENOGEARS © 1998 SQUARE ENIX CO., LTD. All Rights Reserved.<br>
+                이 사이트는 팬 프로젝트이며 스퀘어 에닉스와 관련이 없습니다.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
