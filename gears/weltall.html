@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>벨토르 - 제노기어스 한국어 공략</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --bg-primary: #000000;
+    --bg-secondary: #080808;
+    --bg-tertiary: #0f0f0f;
+    --bg-card: #0a0a0a;
+    
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --text-muted: #777777;
+    
+    --accent-red: #ff0000;
+    --accent-red-dark: #cc0000;
+    --accent-red-darker: #990000;
+    --accent-glow: rgba(255, 0, 0, 0.5);
+    
+    --border-color: #1a1a1a;
+    --border-glow: rgba(255, 0, 0, 0.3);
+    
+    --font-display: 'Orbitron', sans-serif;
+    --font-body: 'Noto Sans KR', sans-serif;
+    
+    --container-width: 900px;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+    );
+    opacity: 0.3;
+}
+
+.bg-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    background: 
+        radial-gradient(ellipse at 50% 0%, rgba(153, 0, 0, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 60%, rgba(153, 0, 0, 0.1) 0%, transparent 40%);
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+.main-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(180deg, var(--bg-primary) 0%, rgba(0, 0, 0, 0.95) 100%);
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+}
+
+.header-content {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--spacing-sm) var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.gear-icon {
+    font-size: 2rem;
+    color: var(--accent-red);
+    animation: spin 10s linear infinite;
+    text-shadow: 0 0 20px var(--accent-glow);
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.title-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    background: linear-gradient(135deg, var(--text-primary), var(--accent-red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-decoration: none;
+}
+
+.subtitle {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+/* Navigation */
+.main-nav {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--text-secondary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent-red);
+    border-color: var(--border-glow);
+    background: rgba(255, 0, 0, 0.1);
+}
+
+.nav-link.active {
+    color: var(--accent-red);
+    border-color: var(--accent-red);
+    background: rgba(255, 0, 0, 0.15);
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    padding: var(--spacing-md) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.85rem;
+}
+
+.breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    color: var(--accent-red);
+}
+
+.breadcrumb span {
+    color: var(--text-muted);
+}
+
+.breadcrumb .current {
+    color: var(--text-secondary);
+}
+
+/* Character Header */
+.character-header {
+    display: grid;
+    grid-template-columns: auto 280px;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg) 0;
+    margin-bottom: var(--spacing-lg);
+    align-items: start;
+}
+
+/* 왼쪽: 캐릭터 카드 (일러) */
+.character-card {
+    background: #f5f5f5;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.character-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* 오른쪽: 정보 박스들 */
+.character-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    width: 280px;
+}
+
+.info-box {
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(20,20,20,1) 100%);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--accent-red);
+    border-radius: 4px;
+    padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.info-box-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.1em;
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-box-title .arrow {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.info-box p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.gear-list {
+    list-style: none;
+}
+
+.gear-list li {
+    padding: 4px 0;
+}
+
+.gear-list a {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.gear-list a::before {
+    content: '▸';
+    color: var(--accent-red);
+    font-size: 0.75rem;
+}
+
+.gear-list a:hover {
+    color: var(--accent-red);
+}
+
+/* 스프라이트 이미지 */
+.sprite-section {
+    display: flex;
+    justify-content: center;
+    padding: var(--spacing-lg) 0;
+    margin-bottom: var(--spacing-md);
+}
+
+.sprite-section img {
+    height: 150px;
+    image-rendering: pixelated;
+}
+
+/* Section Title */
+.section-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--accent-red);
+    letter-spacing: 0.1em;
+    margin: var(--spacing-xl) 0 var(--spacing-md);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.section-title::before {
+    content: '◆';
+    font-size: 0.8rem;
+}
+
+/* Data Tables */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: var(--spacing-lg);
+}
+
+.data-table th {
+    background: var(--bg-tertiary);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--accent-red);
+    letter-spacing: 0.05em;
+    text-align: left;
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table td {
+    padding: var(--spacing-sm);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tr:hover td {
+    background: rgba(255, 0, 0, 0.03);
+}
+
+.command-key {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    background: var(--bg-tertiary);
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid var(--border-color);
+    margin-right: 2px;
+}
+
+.cmd-square {
+    color: #ff77ff;
+}
+
+.cmd-triangle {
+    color: #77ff77;
+}
+
+.cmd-circle {
+    color: #ff7777;
+}
+
+.element-tag {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+}
+
+.element-wind { color: #7fdb7f; border-color: #3d6b3d; }
+.element-earth { color: #d4a574; border-color: #6b523a; }
+.element-fire { color: #ff7b7b; border-color: #8b3a3a; }
+.element-water { color: #7bc8ff; border-color: #3a5c8b; }
+.element-light { color: #ffffa0; border-color: #8b8b3a; }
+.element-dark { color: #c07bff; border-color: #5a3a8b; }
+
+/* Character Description */
+.character-description {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.character-description p {
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: var(--spacing-md);
+    text-align: justify;
+}
+
+.character-description p:last-child {
+    margin-bottom: 0;
+}
+
+.character-description strong {
+    color: var(--text-primary);
+}
+
+.highlight {
+    color: var(--accent-red);
+}
+
+/* Back Link */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: var(--spacing-md) 0;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: var(--accent-red);
+}
+
+/* Footer */
+.main-footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    padding: var(--spacing-lg) var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+
+.footer-content {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-content p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .character-header {
+        grid-template-columns: 1fr;
+    }
+    
+    .character-info {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .info-box {
+        flex: 1;
+        min-width: 200px;
+    }
+}
+
+@media (max-width: 700px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .main-nav {
+        justify-content: center;
+    }
+    
+    .character-card {
+        text-align: center;
+    }
+    
+    .character-info {
+        flex-direction: column;
+    }
+    
+    .sprite-section img {
+        height: 100px;
+    }
+    
+    .data-table {
+        font-size: 0.85rem;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: var(--spacing-xs);
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+    <div class="scanlines"></div>
+    
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="gear-icon">⚙</div>
+                <div class="title-block">
+                    <a href="../index.html" class="main-title">XENOGEARS</a>
+                    <p class="subtitle">한국어 공략 가이드</p>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="../index.html" class="nav-link">가이드</a>
+                <a href="../walkthrough.html" class="nav-link">공략</a>
+                <a href="../characters.html" class="nav-link active">캐릭터</a>
+                <a href="../info.html" class="nav-link">정보</a>
+                <a href="../story.html" class="nav-link">스토리</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <nav class="breadcrumb">
+            <a href="../index.html">홈</a>
+            <span>›</span>
+            <a href="../characters.html">캐릭터</a>
+            <span>›</span>
+			<a href="../char/fei.html">페이</a>
+            <span>›</span>
+            <span class="current">벨토르</span>
+        </nav>
+
+        <section class="character-header">
+            <div class="character-card">
+                <div class="character-image">
+                    <img src="../Gearill/weltall.png" alt="벨토르">
+                </div>
+            </div>
+            <div class="character-info">
+                <div class="info-box">
+                    <p class="info-box-title"><span class="arrow">◁</span> 전투 방식 <span class="arrow">▷</span></p>
+                    <p>에테르파와 권법을 이용한<br>다이내믹한 전투</p>
+                </div>
+                <div class="info-box">
+                    <p class="info-box-title"><span class="arrow">◁</span> 파일럿 <span class="arrow">▷</span></p>
+                    <ul class="gear-list">
+                        <li><a href="../char/fei.html">페이</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="sprite-section">
+            <img src="gear-asa.png" alt="기어 아사">
+        </div>
+
+        <h2 class="section-title">어빌리티표</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>어빌리티명</th>
+                    <th>소비 EP</th>
+                    <th>습득 레벨</th>
+                    <th>설명</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>지탄</td>
+                    <td>2</td>
+                    <td>Lv.1</td>
+                    <td>무속성 에테르 공격</td>
+                </tr>
+                <tr>
+                    <td>내양공</td>
+                    <td>2</td>
+                    <td>Lv.10</td>
+                    <td>HP 회복</td>
+                </tr>
+                <tr>
+                    <td>강기</td>
+                    <td>4</td>
+                    <td>Lv.20</td>
+                    <td>공격력↑</td>
+                </tr>
+                <tr>
+                    <td>유기</td>
+                    <td>4</td>
+                    <td>Lv.35</td>
+                    <td>적의 공격 회피 시 카운터로 공격</td>
+                </tr>
+                <tr>
+                    <td>광경</td>
+                    <td>5</td>
+                    <td>Lv.46</td>
+                    <td>방어력↑, 공격력↓</td>
+                </tr>
+                <tr>
+                    <td>암경</td>
+                    <td>5</td>
+                    <td>Lv.46</td>
+                    <td>공격력↑, 방어력↓</td>
+                </tr>
+                <tr>
+                    <td>천광</td>
+                    <td>10</td>
+                    <td>Lv.55</td>
+                    <td>무속성 에테르 공격</td>
+                </tr>
+                <tr>
+                    <td>은아</td>
+                    <td>20</td>
+                    <td>Lv.72</td>
+                    <td>무속성 에테르 공격</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 class="section-title">스킬표</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>커맨드</th>
+                    <th>스킬명</th>
+                    <th>필요 연료</th>
+                    <th>어택 레벨</th>
+                    <th>습득 조건 및 비고</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="command-key cmd-square">□</span><span class="command-key cmd-square">□</span></td>
+                    <td>무예 뇌격</td>
+                    <td>40</td>
+                    <td>Lv.1</td>
+                    <td>페이의 [무예 뇌신]을 습득</td>
+                </tr>
+                <tr>
+                    <td><span class="command-key cmd-square">□</span><span class="command-key cmd-triangle">△</span></td>
+                    <td>무예 열풍</td>
+                    <td>50</td>
+                    <td>Lv.1</td>
+                    <td>페이의 [무예 천열]을 습득</td>
+                </tr>
+                <tr>
+                    <td><span class="command-key cmd-square">□</span><span class="command-key cmd-circle">○</span></td>
+                    <td>무예 뇌굉</td>
+                    <td>10</td>
+                    <td>Lv.1</td>
+                    <td>벨토르에 [봉인 L1 해제]를 장착</td>
+                </tr>
+                <tr>
+                    <td><span class="command-key cmd-triangle">△</span><span class="command-key cmd-square">□</span></td>
+                    <td>무예 파산</td>
+                    <td>70</td>
+                    <td>Lv.2</td>
+                    <td>페이의 [무예 파암]을 습득</td>
+                </tr>
+                <tr>
+                    <td><span class="command-key cmd-triangle">△</span><span class="command-key cmd-triangle">△</span></td>
+                    <td>무예 용천</td>
+                    <td>80</td>
+                    <td>Lv.2</td>
+                    <td>페이의 [무예 천무]를 습득</td>
+                </tr>
+                <tr>
+                    <td><span class="command-key cmd-triangle">△</span><span class="command-key cmd-circle">○</span></td>
+                    <td>무예 십자</td>
+                    <td>20</td>
+                    <td>Lv.2</td>
+                    <td>벨토르에 [봉인 L2 해제]를 장착</td>
+                </tr>
+                <tr>
+                    <td><span class="command-key cmd-circle">○</span><span class="command-key cmd-square">□</span></td>
+                    <td>무예 뇌무</td>
+                    <td>100</td>
+                    <td>Lv.3</td>
+                    <td>페이의 [무예 용신]을 습득</td>
+                </tr>
+                <tr>
+                    <td><span class="command-key cmd-circle">○</span><span class="command-key cmd-triangle">△</span></td>
+                    <td>무예 용무</td>
+                    <td>110</td>
+                    <td>Lv.3</td>
+                    <td>페이의 [무예 붕천]을 습득</td>
+                </tr>
+                <tr>
+                    <td><span class="command-key cmd-circle">○</span><span class="command-key cmd-circle">○</span></td>
+                    <td>무예 진뢰</td>
+                    <td>30</td>
+                    <td>Lv.3</td>
+                    <td>벨토르에 [봉인 L3 해제]를 장착</td>
+                </tr>
+                <tr>
+                    <td><span class="command-key cmd-square">□</span></td>
+                    <td>초무예 광장</td>
+                    <td>30</td>
+                    <td>Lv.∞</td>
+                    <td>셰바트 이후 습득</td>
+                </tr>
+                <tr>
+                    <td><span class="command-key cmd-triangle">△</span></td>
+                    <td>초무예 굉천</td>
+                    <td>30</td>
+                    <td>Lv.∞</td>
+                    <td>페이가 Lv.60을 달성</td>
+                </tr>
+                <tr>
+                    <td><span class="command-key cmd-circle">○</span></td>
+                    <td>기신흑장</td>
+                    <td>30</td>
+                    <td>Lv.∞</td>
+                    <td>페이가 Lv.70을 달성</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="../characters.html" class="back-link">← 캐릭터 목록으로 돌아가기</a>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>XENOGEARS © 1998 SQUARE ENIX CO., LTD. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

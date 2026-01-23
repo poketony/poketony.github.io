@@ -364,8 +364,20 @@ body {
 .button-symbol {
     font-family: var(--font-display);
     font-size: 1.5rem;
-    color: var(--accent-red);
+    color: var(--accent-white);
     margin-bottom: var(--spacing-xs);
+}
+
+.cmd-square {
+    color: #ff77ff;
+}
+
+.cmd-triangle {
+    color: #77ff77;
+}
+
+.cmd-circle {
+    color: #ff7777;
 }
 
 .button-name {
@@ -547,17 +559,17 @@ body {
                 
                 <div class="button-grid">
                     <div class="button-item">
-                        <div class="button-symbol">□</div>
+                        <div class="button-symbol"><span class="cmd-square">□</span></div>
                         <div class="button-name">약공격</div>
                         <div class="button-info">AP 1 소모</div>
                     </div>
                     <div class="button-item">
-                        <div class="button-symbol">△</div>
+                        <div class="button-symbol"><span class="cmd-triangle">△</span></div>
                         <div class="button-name">중공격</div>
                         <div class="button-info">AP 2 소모</div>
                     </div>
                     <div class="button-item">
-                        <div class="button-symbol">○</div>
+                        <div class="button-symbol"><span class="cmd-circle">○</span></div>
                         <div class="button-name">강공격</div>
                         <div class="button-info">AP 3 소모</div>
                     </div>
@@ -567,14 +579,14 @@ body {
                     <div class="info-box-title">💡 필살기 습득 팁</div>
                     <p style="margin: 0; color: var(--text-secondary);">
                         필살기는 특정 버튼 조합을 반복해서 사용하면 습득됩니다. 
-                        예를 들어 □□○ 조합을 여러 번 사용하면 해당 필살기를 배울 수 있습니다. 
+                        예를 들어 <span class="cmd-square">□</span><span class="cmd-square">□</span><span class="cmd-circle">○</span> 조합을 여러 번 사용하면 해당 필살기를 배울 수 있습니다. 
                         <span class="highlight">위저드 링</span>을 장착하면 필살기 습득 속도가 빨라집니다!
                     </p>
                 </div>
 
                 <p>
                     필살기를 사용하려면 해당 조합에 필요한 AP가 있어야 합니다. 
-                    예를 들어 □△○ 필살기를 사용하려면 최소 6 AP가 필요합니다 (1+2+3).
+                    예를 들어 <span class="cmd-square">□</span><span class="cmd-triangle">△</span><span class="cmd-circle">○</span> 필살기를 사용하려면 최소 6 AP가 필요합니다 (1+2+3).
 					<br>참고로 특정 단계까진 모든 캐릭터의 필살기 조합이 동일하니 참고해 주세요. 
                 </p>
             </div>
@@ -599,17 +611,17 @@ body {
 
                 <div class="button-grid">
                     <div class="button-item">
-                        <div class="button-symbol">□</div>
+                        <div class="button-symbol"><span class="cmd-square">□</span></div>
                         <div class="button-name">약공격</div>
                         <div class="button-info">연료 10 소모</div>
                     </div>
                     <div class="button-item">
-                        <div class="button-symbol">△</div>
+                        <div class="button-symbol"><span class="cmd-triangle">△</span></div>
                         <div class="button-name">중공격</div>
                         <div class="button-info">연료 20 소모</div>
                     </div>
                     <div class="button-item">
-                        <div class="button-symbol">○</div>
+                        <div class="button-symbol"><span class="cmd-circle">○</span></div>
                         <div class="button-name">강공격</div>
                         <div class="button-info">연료 30 소모</div>
                     </div>
@@ -621,16 +633,16 @@ body {
                 </p>
                 
                 <ul class="info-list">
-                    <li><strong>어택 레벨 1:</strong> □로 시작하는 필살기 사용 가능</li>
-                    <li><strong>어택 레벨 2:</strong> □ 또는 △로 시작하는 필살기 사용 가능</li>
+                    <li><strong>어택 레벨 1:</strong> <span class="cmd-square">□</span>로 시작하는 필살기 사용 가능</li>
+                    <li><strong>어택 레벨 2:</strong> <span class="cmd-square">□</span> 또는 <span class="cmd-triangle">△</span>로 시작하는 필살기 사용 가능</li>
                     <li><strong>어택 레벨 3:</strong> 모든 필살기 사용 가능</li>
                 </ul>
 
                 <div class="info-box">
                     <div class="info-box-title">⚡ 부스터 (Booster)</div>
                     <p style="margin: 0; color: var(--text-secondary);">
-                        모든 기어는 부스터 기능이 있습니다. 활성화하면 AT 게이지가 2배 빠르게 차지만, 
-                        매 턴 추가 연료를 소모합니다. 보통은 연료 낭비지만, 일부 전투에서는 필요합니다.
+                        모든 기어는 부스터 기능이 있습니다. 활성화하면 어택 게이지가 2배 빠르게 차지만, 
+                        매 턴 추가 연료를 소모합니다. 특정 전투에서 유용합니다.
                     </p>
                 </div>
 
@@ -677,7 +689,7 @@ body {
 
                 <p>
                     인피니티 레벨에서는 세 가지 단일 버튼 필살기 중 하나를 사용할 수 있습니다. 
-                    가장 강력한 것은 ○ 공격이지만, 사용하려면 <span class="highlight">캐릭터 레벨이 최소 70</span>이어야 합니다. 
+                    가장 강력한 것은 <span class="cmd-circle">○</span> 공격이지만, 사용하려면 <span class="highlight">캐릭터 레벨이 최소 70</span>이어야 합니다. 
                     인피니티 레벨은 3라운드 후 어택 레벨 0으로 돌아갑니다.
                 </p>
 
