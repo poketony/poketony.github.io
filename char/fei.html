@@ -517,16 +517,74 @@ body {
         height: 100px;
     }
     
+    /* 모바일 카드형 테이블 */
     .data-table {
+        border: none;
+        background: transparent;
+    }
+    
+    .data-table thead {
+        display: none;
+    }
+    
+    .data-table tbody {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .data-table tr {
+        display: block;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: var(--spacing-sm);
+    }
+    
+    .data-table tr:hover {
+        background: var(--bg-card);
+    }
+    
+    .data-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 4px;
+        border-bottom: 1px solid var(--border-color);
         font-size: 0.85rem;
     }
     
-    .data-table th,
-    .data-table td {
-        padding: var(--spacing-xs);
+    .data-table td:last-child {
+        border-bottom: none;
+    }
+    
+    .data-table td::before {
+        content: attr(data-label);
+        font-weight: 500;
+        color: var(--accent-red);
+        font-size: 0.75rem;
+        flex-shrink: 0;
+        margin-right: var(--spacing-sm);
     }
 }
     </style>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.data-table').forEach(function(table) {
+            var headers = [];
+            table.querySelectorAll('thead th').forEach(function(th) {
+                headers.push(th.textContent.trim());
+            });
+            table.querySelectorAll('tbody tr').forEach(function(row) {
+                row.querySelectorAll('td').forEach(function(td, i) {
+                    if (headers[i]) {
+                        td.setAttribute('data-label', headers[i]);
+                    }
+                });
+            });
+        });
+    });
+    </script>
 </head>
 <body>
     <div class="bg-glow"></div>
